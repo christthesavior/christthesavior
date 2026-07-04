@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="google-site-verification" content="lSp8qSLHvSaGiv4b5zSdFoWIaojvf-iG1SmsV8vgQ6A" />
+    <meta name="google-site-verification" content="eK-8dqucYn5f-sInCi6X6LPFUPKXICx6wD5qqAIQmog" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Christ the Savior Church - Worship Songbook</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #f5f0e6 0%, #e8dfd1 100%);
+            min-height: 100vh;
+            padding: 0.8rem;
+            transition: background 0.4s ease;
+        }
+        body.dark-mode {
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+        }
+        body.dark-mode .app-container { background: #1e1e2e; }
+        body.dark-mode .header { background: linear-gradient(130deg, #0f3460 0%, #0a1a2e 100%); }
+        body.dark-mode .search-section { background: #252540; border-bottom-color: #3a3a5a; }
+        body.dark-mode .search-input { background: #2a2a45; border-color: #4a4a6a; color: #e0e0e0; }
+        body.dark-mode .search-input::placeholder { color: #8888aa; }
+        body.dark-mode .song-section { background: #1a1a2e; }
+        body.dark-mode .song-title { color: #e0b04b; }
+        body.dark-mode .song-lyrics { background: #252540; border-color: #3a3a5a; color: #e8e8f0; }
+        body.dark-mode .song-number { background: #0f3460; color: #e0b04b; }
+        body.dark-mode footer { background: #252540; color: #a0a0c0; border-top-color: #3a3a5a; }
+        body.dark-mode .settings-modal-content { background: #1e1e2e; color: #e0e0e0; border: 1px solid #3a3a5a; }
+        body.dark-mode .settings-modal-content h3 { color: #e0b04b; }
+        body.dark-mode .setting-item { border-bottom-color: #3a3a5a; }
+        body.dark-mode .setting-item label { color: #e0b04b; }
+        body.dark-mode .setting-item select { background: #2a2a45; border-color: #4a4a6a; color: #e0e0e0; }
+        body.dark-mode .font-preview { color: #a0a0c0; }
+        body.dark-mode .close-settings-btn { background: #0f3460; color: white; }
+        body.dark-mode .close-settings-btn:hover { background: #1a4a7a; }
+        body.dark-mode .search-btn { background: #0f3460; }
+        body.dark-mode .search-btn:hover { background: #1a4a7a; }
+        body.dark-mode .suggestion-item { background: #2a2a45; color: #e0e0e0; border-bottom-color: #3a3a5a; }
+        body.dark-mode .suggestion-item:hover { background: #3a3a5a; }
+        body.dark-mode .tab-bar { border-bottom-color: #3a3a5a; }
+        body.dark-mode .tab-btn { color: #a0a0c0; }
+        body.dark-mode .tab-btn.active { background: #0f3460; color: white; }
+        body.dark-mode .favourite-song-item { background: #252540; border-color: #3a3a5a; }
+        body.dark-mode .favourite-song-title { color: #e0b04b; }
+        body.dark-mode .favourite-song-number { background: #0f3460; color: #e0b04b; }
+
+        .app-container { max-width: 1200px; margin: 0 auto; background: #ffffff; border-radius: 28px; box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.3); overflow: hidden; }
+        .header { background: linear-gradient(130deg, #1e3a2c 0%, #0f281c 100%); padding: 1rem; text-align: center; position: relative; }
+        .header h1 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: #f2e6d5; }
+        .header h1 span { color: #e0b04b; }
+        .header p { margin-top: 0.3rem; color: #bcc9b0; font-size: 0.6rem; letter-spacing: 1px; }
+        
+        .settings-btn {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        .settings-btn:hover { background: rgba(255,255,255,0.35); transform: scale(1.05); }
+        
+        .settings-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        .settings-modal.active { display: flex; }
+        .settings-modal-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 28px;
+            width: 92%;
+            max-width: 380px;
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .settings-modal-content h3 { margin-bottom: 1.2rem; color: #1e3a2c; text-align: center; font-size: 1.2rem; }
+        .setting-item {
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid #eee0d0;
+        }
+        .setting-item label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1e3a2c;
+            font-size: 0.85rem;
+        }
+        .setting-item select {
+            width: 100%;
+            padding: 0.6rem;
+            border: 2px solid #ddd0bc;
+            border-radius: 14px;
+            font-size: 0.8rem;
+            background: #fff;
+            cursor: pointer;
+        }
+        .font-preview {
+            margin-top: 0.5rem;
+            font-size: 0.7rem;
+            color: #8f7a62;
+            padding: 0.3rem;
+            border-radius: 8px;
+            font-style: italic;
+        }
+        .toggle-switch {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .toggle-switch span { font-size: 0.8rem; font-weight: normal; }
+        .toggle-checkbox {
+            width: 48px;
+            height: 24px;
+            background: #ddd0bc;
+            border-radius: 30px;
+            position: relative;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .toggle-checkbox.active { background: #1e3a2c; }
+        .toggle-checkbox:after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 3px;
+            transition: 0.3s;
+        }
+        .toggle-checkbox.active:after { left: 25px; }
+        .close-settings-btn {
+            width: 100%;
+            padding: 0.7rem;
+            background: #1e3a2c;
+            color: white;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        .close-settings-btn:hover { background: #0f281c; }
+        
+        .search-section { padding: 0.8rem; background: #fefaf5; border-bottom: 1px solid #e9dfd1; }
+        .search-wrapper { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; justify-content: center; }
+        .search-input { 
+            flex: 2; 
+            min-width: 200px; 
+            padding: 0.6rem 1rem; 
+            font-size: 0.85rem; 
+            border: 2px solid #ddd0bc; 
+            border-radius: 48px; 
+            outline: none; 
+            transition: all 0.2s;
+        }
+        .search-input:focus { border-color: #b8862c; }
+        .search-btn { background: #1e3a2c; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 48px; font-weight: 600; cursor: pointer; font-size: 0.8rem; transition: all 0.2s; }
+        .search-btn:hover { background: #0f281c; }
+        .info-note { text-align: center; margin-top: 0.5rem; font-size: 0.6rem; color: #8f7a62; }
+        .search-suggestions { margin-top: 0.5rem; background: #fff; border-radius: 18px; border: 1px solid #eee0d0; display: none; max-height: 180px; overflow-y: auto; }
+        .search-suggestions.active { display: block; }
+        .suggestion-item { padding: 0.5rem 1rem; cursor: pointer; border-bottom: 1px solid #f0e4d4; font-size: 0.8rem; transition: background 0.2s; }
+        .suggestion-item:hover { background: #f0e4d4; }
+        
+        .main-content { display: flex; flex-wrap: wrap; }
+        .song-section { flex: 1; min-width: 300px; padding: 1rem; background: #ffffff; }
+        
+        .tab-bar {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #e9dfd1;
+            padding-bottom: 0.5rem;
+        }
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 0.4rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 30px;
+            color: #7a6a55;
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            background: #1e3a2c;
+            color: white;
+        }
+        .fav-list { display: none; }
+        .fav-list.active { display: block; }
+        .song-list { display: block; }
+        
+        .song-header { border-left: 5px solid #e0b04b; padding-left: 0.8rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; }
+        .song-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: #1e3a2c; display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+        .fav-star {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #ddd0bc;
+            transition: all 0.2s;
+        }
+        .fav-star:hover { transform: scale(1.1); }
+        .fav-star.favourited { color: #ffd700; }
+        .song-number { background: #efe1cf; padding: 0.2rem 0.7rem; border-radius: 40px; font-size: 0.7rem; font-weight: 700; color: #7a5a3a; }
+        
+        .song-lyrics {
+            background: #fefcf8;
+            padding: 1rem;
+            border-radius: 20px;
+            border: 1px solid #f0e4d4;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            color: #2b2a24;
+            overflow-y: visible;
+            min-height: auto;
+        }
+        .lyrics-font-default .song-lyrics { font-family: 'Inter', 'Segoe UI', sans-serif; }
+        .lyrics-font-classic .song-lyrics { font-family: 'Playfair Display', 'Times New Roman', serif; font-size: 0.95rem; }
+        
+        .favourite-song-item {
+            background: #fefaf5;
+            border: 1px solid #e9dfd1;
+            border-radius: 12px;
+            padding: 0.7rem;
+            margin-bottom: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .favourite-song-item:hover { background: #f5ede0; transform: translateX(5px); }
+        .favourite-song-title {
+            font-weight: 700;
+            color: #1e3a2c;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+        }
+        .favourite-song-number {
+            background: #efe1cf;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.65rem;
+        }
+        .empty-fav { text-align: center; color: #b8a992; padding: 1.5rem; font-style: italic; font-size: 0.8rem; }
+        
+        footer { text-align: center; padding: 0.8rem; background: #fefaf5; color: #a3927c; font-size: 0.6rem; border-top: 1px solid #e9dfd1; }
+        
+        .toast-message {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e3a2c;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .toast-message.show { opacity: 1; }
+        
+        @media (max-width: 750px) { 
+            body { padding: 0.5rem; } 
+            .settings-btn { top: 10px; right: 12px; width: 32px; height: 32px; font-size: 0.9rem; } 
+            .song-title { font-size: 1.1rem; }
+            .song-lyrics { font-size: 0.85rem; line-height: 1.7; }
+            .tab-btn { padding: 0.3rem 0.8rem; font-size: 0.7rem; }
+        }
+    </style>
+</head>
+<body class="lyrics-font-default">
+    <div class="app-container">
+        <div class="header">
+            <h1>✝ CHRIST THE SAVIOR <span>CHURCH</span> ✝</h1>
+            <p>WORSHIP SONGBOOK · 55 SONGS OF PRAISE</p>
+            <button id="settingsBtn" class="settings-btn"><i class="fas fa-cog"></i></button>
+        </div>
+        
+        <div class="search-section">
+            <div class="search-wrapper">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search by song name or number (1-55)" autocomplete="off">
+                <button id="searchBtn" class="search-btn"><i class="fas fa-search"></i> SEARCH</button>
+            </div>
+            <div id="searchSuggestions" class="search-suggestions"></div>
+            <div class="info-note">✨ Search by song name or number (1-55) | Click the star to save favourites ✨</div>
+        </div>
+        
+        <div class="main-content">
+            <div class="song-section">
+                <div class="tab-bar">
+                    <button id="tabAllBtn" class="tab-btn active">🎵 All Songs</button>
+                    <button id="tabFavBtn" class="tab-btn">⭐ Favourites</button>
+                </div>
+                <div id="allSongsList" class="song-list">
+                    <div class="song-header">
+                        <h2 class="song-title">
+                            <span>Loading...</span>
+                            <button class="fav-star"><i class="far fa-star"></i></button>
+                        </h2>
+                        <span class="song-number">#0</span>
+                    </div>
+                    <div class="song-lyrics">Please wait, loading songs...</div>
+                </div>
+                <div id="favSongsList" class="fav-list">
+                    <div class="empty-fav">⭐ No favourites yet. Click the star on any song to add!</div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <i class="fas fa-church"></i> Christ the Savior Church · Blessed be the Lord
+        </footer>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="settings-modal">
+        <div class="settings-modal-content">
+            <h3><i class="fas fa-sliders-h"></i> Settings</h3>
+            <div class="setting-item">
+                <label>🌙 Dark Mode</label>
+                <div class="toggle-switch">
+                    <span>Enable dark theme</span>
+                    <div id="darkModeToggle" class="toggle-checkbox"></div>
+                </div>
+            </div>
+            <div class="setting-item">
+                <label>📖 Song Lyrics Font</label>
+                <select id="fontSelect">
+                    <option value="default">Modern (Sans-serif)</option>
+                    <option value="classic">Classic (Serif)</option>
+                </select>
+                <div id="fontPreview" class="font-preview">✝ Amazing grace, how sweet the sound ✝</div>
+            </div>
+            <button id="closeSettingsBtn" class="close-settings-btn"><i class="fas fa-check"></i> Close</button>
+        </div>
+    </div>
+
+    <div id="toastMessage" class="toast-message"></div>
+
+    <!-- External songs file -->
+    <script src="songs.js"></script>
+    
+    <script>
+        // Main application
+        let songsDatabase = [];
+        let currentSong = null;
+        let favourites = [];
+
+        // منع تكبير الصفحة عند فتح الكيبورد
+        let viewport = document.querySelector('meta[name="viewport"]');
+        if (viewport) {
+            viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover');
+        }
+
+        // Load favourites from localStorage
+        function loadFavourites() {
+            const saved = localStorage.getItem('churchFavourites');
+            if (saved) {
+                try {
+                    favourites = JSON.parse(saved);
+                } catch(e) { favourites = []; }
+            }
+            renderFavouritesList();
+        }
+
+        function saveFavourites() {
+            localStorage.setItem('churchFavourites', JSON.stringify(favourites));
+            renderFavouritesList();
+            updateStarButton();
+        }
+
+        function toggleFavourite(songNumber) {
+            const idx = favourites.indexOf(songNumber);
+            if (idx === -1) {
+                favourites.push(songNumber);
+                showToast('⭐ Added to favourites!');
+            } else {
+                favourites.splice(idx, 1);
+                showToast('♡ Removed from favourites');
+            }
+            saveFavourites();
+        }
+
+        function isFavourite(songNumber) {
+            return favourites.includes(songNumber);
+        }
+
+        function updateStarButton() {
+            const starBtn = document.querySelector('.fav-star');
+            if (starBtn && currentSong) {
+                if (isFavourite(currentSong.number)) {
+                    starBtn.innerHTML = '<i class="fas fa-star"></i>';
+                    starBtn.classList.add('favourited');
+                } else {
+                    starBtn.innerHTML = '<i class="far fa-star"></i>';
+                    starBtn.classList.remove('favourited');
+                }
+            }
+        }
+
+        function renderFavouritesList() {
+            const container = document.getElementById('favSongsList');
+            if (!container || !songsDatabase.length) return;
+            
+            if (favourites.length === 0) {
+                container.innerHTML = '<div class="empty-fav">⭐ No favourites yet. Click the star on any song to add!</div>';
+                return;
+            }
+            
+            const favSongs = songsDatabase.filter(s => favourites.includes(s.number)).sort((a,b) => a.number - b.number);
+            container.innerHTML = favSongs.map(song => `
+                <div class="favourite-song-item" data-num="${song.number}">
+                    <div class="favourite-song-title">
+                        <span class="favourite-song-number">#${song.number}</span>
+                        <span>${escapeHtml(song.title)}</span>
+                    </div>
+                </div>
+            `).join('');
+            
+            document.querySelectorAll('.favourite-song-item').forEach(el => {
+                el.addEventListener('click', () => {
+                    selectSong(parseInt(el.dataset.num));
+                    document.getElementById('tabAllBtn').click();
+                    // مسح حقل البحث
+                    document.getElementById('searchInput').value = '';
+                });
+            });
+        }
+
+        function selectSong(number) {
+            const song = songsDatabase.find(s => s.number === number);
+            if (song) {
+                currentSong = song;
+                displaySong(song);
+                updateStarButton();
+            }
+        }
+
+        function displaySong(song) {
+            const lyricsHtml = song.lyrics.replace(/\n/g, '<br>');
+            document.getElementById('allSongsList').innerHTML = `
+                <div class="song-header">
+                    <h2 class="song-title">
+                        <span>${escapeHtml(song.title)}</span>
+                        <button class="fav-star"><i class="${isFavourite(song.number) ? 'fas fa-star' : 'far fa-star'}"></i></button>
+                    </h2>
+                    <span class="song-number">#${song.number}</span>
+                </div>
+                <div class="song-lyrics">${lyricsHtml}</div>
+            `;
+            const starBtn = document.querySelector('.fav-star');
+            if (starBtn) {
+                starBtn.addEventListener('click', () => toggleFavourite(song.number));
+            }
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+        
+        function showToast(message) {
+            const toast = document.getElementById('toastMessage');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+        
+        // Settings functions
+        function applyFont(font) {
+            document.body.classList.remove('lyrics-font-default', 'lyrics-font-classic');
+            if (font === 'classic') {
+                document.body.classList.add('lyrics-font-classic');
+            } else {
+                document.body.classList.add('lyrics-font-default');
+            }
+            localStorage.setItem('lyricsFont', font);
+            const preview = document.getElementById('fontPreview');
+            if (preview) {
+                preview.style.fontFamily = font === 'classic' ? "'Playfair Display', serif" : "'Inter', sans-serif";
+            }
+        }
+        
+        function applyDarkMode(enabled) {
+            if (enabled) {
+                document.body.classList.add('dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+            }
+            localStorage.setItem('churchTheme', enabled ? 'dark' : 'light');
+            const toggle = document.getElementById('darkModeToggle');
+            if (toggle) {
+                enabled ? toggle.classList.add('active') : toggle.classList.remove('active');
+            }
+        }
+        
+        // Initialize settings
+        function initSettings() {
+            const savedFont = localStorage.getItem('lyricsFont') || 'default';
+            const fontSelect = document.getElementById('fontSelect');
+            if (fontSelect) {
+                fontSelect.value = savedFont;
+                applyFont(savedFont);
+                fontSelect.addEventListener('change', (e) => applyFont(e.target.value));
+            }
+            
+            const savedDarkMode = localStorage.getItem('churchTheme') === 'dark';
+            applyDarkMode(savedDarkMode);
+            
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('click', () => {
+                    applyDarkMode(!document.body.classList.contains('dark-mode'));
+                });
+            }
+            
+            const settingsBtn = document.getElementById('settingsBtn');
+            const settingsModal = document.getElementById('settingsModal');
+            const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+            
+            if (settingsBtn) {
+                settingsBtn.addEventListener('click', () => settingsModal.classList.add('active'));
+            }
+            if (closeSettingsBtn) {
+                closeSettingsBtn.addEventListener('click', () => settingsModal.classList.remove('active'));
+            }
+            if (settingsModal) {
+                settingsModal.addEventListener('click', (e) => {
+                    if (e.target === settingsModal) settingsModal.classList.remove('active');
+                });
+            }
+        }
+        
+        // Tab functionality
+        function initTabs() {
+            const tabAllBtn = document.getElementById('tabAllBtn');
+            const tabFavBtn = document.getElementById('tabFavBtn');
+            const allSongsDiv = document.getElementById('allSongsList');
+            const favSongsDiv = document.getElementById('favSongsList');
+            
+            if (tabAllBtn) {
+                tabAllBtn.addEventListener('click', () => {
+                    tabAllBtn.classList.add('active');
+                    tabFavBtn.classList.remove('active');
+                    allSongsDiv.style.display = 'block';
+                    favSongsDiv.style.display = 'none';
+                    // مسح حقل البحث عند الرجوع للكل
+                    document.getElementById('searchInput').value = '';
+                });
+            }
+            if (tabFavBtn) {
+                tabFavBtn.addEventListener('click', () => {
+                    tabFavBtn.classList.add('active');
+                    tabAllBtn.classList.remove('active');
+                    allSongsDiv.style.display = 'none';
+                    favSongsDiv.style.display = 'block';
+                    renderFavouritesList();
+                });
+            }
+        }
+        
+        // Search functionality
+        function initSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const searchBtn = document.getElementById('searchBtn');
+            const suggestionsDiv = document.getElementById('searchSuggestions');
+            
+            // بداية الموقع - حقل البحث فاضي
+            searchInput.value = '';
+            
+            function showSuggestions() {
+                if (!songsDatabase.length) return;
+                const query = searchInput.value.trim().toLowerCase();
+                if (!query) {
+                    suggestionsDiv.classList.remove('active');
+                    return;
+                }
+                
+                const numQuery = parseInt(query);
+                if (!isNaN(numQuery) && numQuery >= 1 && numQuery <= songsDatabase.length) {
+                    const found = songsDatabase.find(s => s.number === numQuery);
+                    if (found) {
+                        suggestionsDiv.innerHTML = `<div class="suggestion-item" data-num="${found.number}">🔢 #${found.number} - ${escapeHtml(found.title)}</div>`;
+                        suggestionsDiv.classList.add('active');
+                        return;
+                    }
+                }
+                
+                const matches = songsDatabase.filter(s => 
+                    s.title.toLowerCase().includes(query) || 
+                    s.lyrics.toLowerCase().includes(query)
+                ).slice(0, 7);
+                
+                if (matches.length) {
+                    suggestionsDiv.innerHTML = matches.map(s => 
+                        `<div class="suggestion-item" data-num="${s.number}">🎵 ${escapeHtml(s.title)} <span style="color:#8f7a62;">#${s.number}</span></div>`
+                    ).join('');
+                    suggestionsDiv.classList.add('active');
+                } else {
+                    suggestionsDiv.classList.remove('active');
+                }
+            }
+            
+            let lastSearch = '';
+            function searchSong() {
+                if (!songsDatabase.length) {
+                    showToast('Loading songs, please wait...');
+                    return;
+                }
+                const query = searchInput.value.trim().toLowerCase();
+                if (!query) return;
+                
+                // منع البحث عن نفس الشي مرتين
+                if (query === lastSearch) return;
+                lastSearch = query;
+                
+                const numQuery = parseInt(query);
+                if (!isNaN(numQuery) && numQuery >= 1 && numQuery <= songsDatabase.length) {
+                    const found = songsDatabase.find(s => s.number === numQuery);
+                    if (found) {
+                        selectSong(found.number);
+                        suggestionsDiv.classList.remove('active');
+                        showToast(`🎵 Found: ${found.title}`);
+                        return;
+                    }
+                }
+                
+                const found = songsDatabase.find(s => 
+                    s.title.toLowerCase().includes(query) || 
+                    s.lyrics.toLowerCase().includes(query)
+                );
+                if (found) {
+                    selectSong(found.number);
+                    suggestionsDiv.classList.remove('active');
+                    showToast(`🎵 Found: ${found.title}`);
+                } else {
+                    showToast('No song found. Try a number (1-55) or word.');
+                }
+            }
+            
+            searchInput.addEventListener('input', showSuggestions);
+            searchInput.addEventListener('keypress', (e) => { 
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    searchSong();
+                }
+            });
+            searchBtn.addEventListener('click', searchSong);
+            
+            // عند الضغط على اقتراح - يختفي صندوق الاقتراحات
+            suggestionsDiv.addEventListener('click', (e) => {
+                const item = e.target.closest('.suggestion-item');
+                if (item && item.dataset.num) {
+                    selectSong(parseInt(item.dataset.num));
+                    suggestionsDiv.classList.remove('active');
+                    searchInput.value = '';
+                    lastSearch = '';
+                }
+            });
+            
+            // إخفاء الاقتراحات عند الضغط خارجها
+            document.addEventListener('click', (e) => {
+                if (!searchInput.contains(e.target) && !suggestionsDiv.contains(e.target)) {
+                    suggestionsDiv.classList.remove('active');
+                }
+            });
+        }
+        
+        // Initialize app when songs are loaded
+        function initApp() {
+            if (window.songsDB && window.songsDB.length > 0) {
+                songsDatabase = window.songsDB;
+                songsDatabase.sort((a,b) => a.number - b.number);
+                loadFavourites();
+                selectSong(songsDatabase[0].number);
+                initTabs();
+                initSearch();
+                console.log('✅ Loaded', songsDatabase.length, 'songs successfully');
+            } else if (typeof songsDB !== 'undefined' && songsDB.length > 0) {
+                songsDatabase = songsDB;
+                songsDatabase.sort((a,b) => a.number - b.number);
+                loadFavourites();
+                selectSong(songsDatabase[0].number);
+                initTabs();
+                initSearch();
+                console.log('✅ Loaded', songsDatabase.length, 'songs successfully');
+            } else {
+                setTimeout(initApp, 100);
+            }
+        }
+        
+        // Start everything
+        initSettings();
+        initApp();
+    </script>
+
+    <!-- Loading Screen -->
+    <div class="gpt-loader">
+        <div class="glow"></div>
+        <div class="circle"></div>
+        <img src="https://i.imgur.com/5ZxgbZG.png" class="logo">
+    </div>
+
+    <style>
+        .gpt-loader{
+            position:fixed;
+            inset:0;
+            background:#f7f4ef;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            overflow:hidden;
+            z-index:999999;
+            animation:fadeOut 1s ease forwards;
+            animation-delay:3.8s;
+        }
+        body.dark-mode .gpt-loader { background: #0f0f1a; }
+        .logo{
+            width:220px;
+            position:relative;
+            z-index:5;
+            opacity:0;
+            animation:
+            intro 1.8s cubic-bezier(.22,.9,.24,1) forwards,
+            idle 4s ease-in-out infinite 2s;
+            filter:drop-shadow(0 0 18px rgba(0,0,0,0.08));
+        }
+        .glow{
+            position:absolute;
+            width:260px;
+            height:260px;
+            border-radius:50%;
+            background:radial-gradient(circle, rgba(201,161,72,0.22), rgba(201,161,72,0.06), transparent 72%);
+            filter:blur(26px);
+            animation:pulse 4s ease-in-out infinite;
+        }
+        .circle{
+            position:absolute;
+            width:245px;
+            height:245px;
+            border-radius:50%;
+            border:1px solid rgba(201,161,72,0.16);
+            animation:spin 18s linear infinite;
+        }
+        .circle::before{
+            content:"";
+            position:absolute;
+            top:-4px;
+            left:50%;
+            transform:translateX(-50%);
+            width:8px;
+            height:8px;
+            border-radius:50%;
+            background:#c9a148;
+            box-shadow:0 0 15px rgba(201,161,72,0.9), 0 0 30px rgba(201,161,72,0.5);
+        }
+        @keyframes intro{
+            0%{ opacity:0; transform: scale(0.72) rotate(-8deg); filter: blur(8px) drop-shadow(0 0 0 rgba(0,0,0,0)); }
+            45%{ opacity:1; transform: scale(1.04) rotate(1deg); filter: blur(0px) drop-shadow(0 0 25px rgba(201,161,72,0.18)); }
+            100%{ opacity:1; transform: scale(1) rotate(0deg); filter: blur(0px) drop-shadow(0 0 18px rgba(0,0,0,0.08)); }
+        }
+        @keyframes idle{
+            0%{ transform:translateY(0px); }
+            50%{ transform:translateY(-7px); }
+            100%{ transform:translateY(0px); }
+        }
+        @keyframes pulse{
+            0%{ transform:scale(1); opacity:0.55; }
+            50%{ transform:scale(1.08); opacity:1; }
+            100%{ transform:scale(1); opacity:0.55; }
+        }
+        @keyframes spin{
+            from{ transform:rotate(0deg); }
+            to{ transform:rotate(360deg); }
+        }
+        @keyframes fadeOut{
+            to{ opacity:0; visibility:hidden; }
+        }
+    </style>
+</body>
+</html>
