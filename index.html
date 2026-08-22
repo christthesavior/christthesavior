@@ -18,7 +18,7 @@
             transition: background 0.4s ease;
         }
         body.dark-mode {
-            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+            background: linear-gradient(135deg, 0f0f1a 0%, #1a1a2e 100%);
         }
         body.dark-mode .app-container { background: #1e1e2e; }
         body.dark-mode .header { background: linear-gradient(130deg, #0f3460 0%, #0a1a2e 100%); }
@@ -345,7 +345,7 @@
         </footer>
     </div>
 
-    <!-- Settings Modal -->
+
     <div id="settingsModal" class="settings-modal">
         <div class="settings-modal-content">
             <h3><i class="fas fa-sliders-h"></i> Settings</h3>
@@ -370,22 +370,22 @@
 
     <div id="toastMessage" class="toast-message"></div>
 
-    <!-- External songs file -->
+
     <script src="songs.js"></script>
     
     <script>
-        // Main application
+  
         let songsDatabase = [];
         let currentSong = null;
         let favourites = [];
 
-        // منع تكبير الصفحة عند فتح الكيبورد
+   
         let viewport = document.querySelector('meta[name="viewport"]');
         if (viewport) {
             viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover');
         }
 
-        // Load favourites from localStorage
+
         function loadFavourites() {
             const saved = localStorage.getItem('churchFavourites');
             if (saved) {
@@ -454,7 +454,7 @@
                 el.addEventListener('click', () => {
                     selectSong(parseInt(el.dataset.num));
                     document.getElementById('tabAllBtn').click();
-                    // مسح حقل البحث
+              
                     document.getElementById('searchInput').value = '';
                 });
             });
@@ -501,7 +501,7 @@
             setTimeout(() => toast.classList.remove('show'), 2500);
         }
         
-        // Settings functions
+   
         function applyFont(font) {
             document.body.classList.remove('lyrics-font-default', 'lyrics-font-classic');
             if (font === 'classic') {
@@ -529,7 +529,7 @@
             }
         }
         
-        // Initialize settings
+     
         function initSettings() {
             const savedFont = localStorage.getItem('lyricsFont') || 'default';
             const fontSelect = document.getElementById('fontSelect');
@@ -566,7 +566,7 @@
             }
         }
         
-        // Tab functionality
+ 
         function initTabs() {
             const tabAllBtn = document.getElementById('tabAllBtn');
             const tabFavBtn = document.getElementById('tabFavBtn');
@@ -579,7 +579,7 @@
                     tabFavBtn.classList.remove('active');
                     allSongsDiv.style.display = 'block';
                     favSongsDiv.style.display = 'none';
-                    // مسح حقل البحث عند الرجوع للكل
+                 
                     document.getElementById('searchInput').value = '';
                 });
             }
@@ -594,13 +594,13 @@
             }
         }
         
-        // Search functionality
+
         function initSearch() {
             const searchInput = document.getElementById('searchInput');
             const searchBtn = document.getElementById('searchBtn');
             const suggestionsDiv = document.getElementById('searchSuggestions');
             
-            // بداية الموقع - حقل البحث فاضي
+          
             searchInput.value = '';
             
             function showSuggestions() {
@@ -645,7 +645,7 @@
                 const query = searchInput.value.trim().toLowerCase();
                 if (!query) return;
                 
-                // منع البحث عن نفس الشي مرتين
+            
                 if (query === lastSearch) return;
                 lastSearch = query;
                 
@@ -682,7 +682,7 @@
             });
             searchBtn.addEventListener('click', searchSong);
             
-            // عند الضغط على اقتراح - يختفي صندوق الاقتراحات
+         
             suggestionsDiv.addEventListener('click', (e) => {
                 const item = e.target.closest('.suggestion-item');
                 if (item && item.dataset.num) {
@@ -693,7 +693,7 @@
                 }
             });
             
-            // إخفاء الاقتراحات عند الضغط خارجها
+        
             document.addEventListener('click', (e) => {
                 if (!searchInput.contains(e.target) && !suggestionsDiv.contains(e.target)) {
                     suggestionsDiv.classList.remove('active');
@@ -701,7 +701,7 @@
             });
         }
         
-        // Initialize app when songs are loaded
+
         function initApp() {
             if (window.songsDB && window.songsDB.length > 0) {
                 songsDatabase = window.songsDB;
@@ -724,12 +724,12 @@
             }
         }
         
-        // Start everything
+   
         initSettings();
         initApp();
     </script>
 
-    <!-- Loading Screen -->
+ 
     <div class="gpt-loader">
         <div class="glow"></div>
         <div class="circle"></div>
