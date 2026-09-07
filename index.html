@@ -158,7 +158,7 @@
         .main-content { display: flex; flex-wrap: wrap; }
         .song-section { flex: 1; min-width: 300px; padding: 1.2rem 1.2rem 1.6rem; background: var(--paper); animation: fadeIn .6s var(--ease) .3s both; }
 
-        .tab-bar { display: flex; gap: 0.5rem; margin-bottom: 1.1rem; border-bottom: 2px solid var(--paper-edge); padding-bottom: 0.5rem; }
+        .tab-bar { display: flex; gap: 0.5rem; margin-bottom: 1.1rem; border-bottom: 2px solid var(--paper-edge); padding-bottom: 0.5rem; flex-wrap: wrap; }
         .tab-btn { background: none; border: none; padding: 0.4rem 1rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 30px; color: var(--ink-soft); transition: all 0.2s; }
         .tab-btn.active { background: var(--spine); color: var(--gold-light); }
         .tab-btn:not(.active):hover { background: rgba(201,161,72,.14); }
@@ -174,6 +174,26 @@
         .fav-star.favourited { color: var(--gold); animation: starPop .4s var(--ease); }
         @keyframes starPop { 0%{ transform: scale(.6); } 55%{ transform: scale(1.35); } 100%{ transform: scale(1); } }
         .song-number { background: var(--spine); color: var(--gold-light); padding: 0.25rem 0.75rem; border-radius: 40px; font-size: 0.68rem; font-weight: 700; letter-spacing:.03em; white-space:nowrap; box-shadow: 0 3px 8px rgba(19,52,38,.3); }
+
+        /* ===== Song action toolbar (random / copy / share / print) ===== */
+        .song-toolbar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+        .action-btn {
+            display: inline-flex; align-items: center; gap: 0.45rem;
+            background: #fffdf7; color: var(--spine); border: 1.5px solid var(--paper-edge);
+            padding: 0.45rem 0.9rem; border-radius: 30px; font-size: 0.72rem; font-weight: 700;
+            cursor: pointer; transition: all .2s var(--ease); letter-spacing: .01em;
+        }
+        .action-btn i { color: var(--gold-dim); font-size: 0.78rem; }
+        .action-btn:hover { border-color: var(--gold); background: rgba(201,161,72,.12); transform: translateY(-1px); box-shadow: 0 6px 14px rgba(19,52,38,.12); }
+        .action-btn:active { transform: translateY(0); }
+        .action-btn.random-btn { background: var(--spine); color: var(--gold-light); border-color: var(--spine); }
+        .action-btn.random-btn i { color: var(--gold-light); }
+        .action-btn.random-btn:hover { background: var(--spine-mid); }
+        .action-btn.random-btn i.fa-dice { transition: transform .5s var(--ease); }
+        .action-btn.random-btn:active i.fa-dice { transform: rotate(220deg); }
+        body.dark-mode .action-btn { background: #1a251f; border-color: #2c3d32; color: #ece3cf; }
+        body.dark-mode .action-btn:hover { background: #26362c; border-color: var(--gold); }
+        body.dark-mode .action-btn.random-btn { background: #133426; color: #e8ce8a; border-color: #133426; }
 
         .song-lyrics {
             background: #fffdf7;
@@ -193,6 +213,19 @@
         .favourite-song-title { font-weight: 700; color: var(--spine); display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; }
         .favourite-song-number { background: var(--spine); color: var(--gold-light); padding: 0.2rem 0.55rem; border-radius: 20px; font-size: 0.65rem; }
         .empty-fav { text-align: center; color: var(--ink-soft); padding: 1.6rem; font-style: italic; font-size: 0.8rem; }
+
+        /* ===== History list (shares favourite-item styling) ===== */
+        .history-song-item { background: #fffdf7; border: 1px solid var(--paper-edge); border-radius: 14px; padding: 0.75rem 0.85rem; margin-bottom: 0.7rem; cursor: pointer; transition: transform .18s var(--ease), box-shadow .18s, border-color .18s; display:flex; align-items:center; justify-content:space-between; gap:.5rem; }
+        .history-song-item:hover { transform: translateX(5px); box-shadow: 0 8px 18px rgba(19,52,38,.12); border-color: var(--gold); }
+        .history-song-title { font-weight: 700; color: var(--spine); display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; }
+        .history-song-number { background: var(--spine); color: var(--gold-light); padding: 0.2rem 0.55rem; border-radius: 20px; font-size: 0.65rem; }
+        .history-clear-wrap { text-align:center; margin-bottom:.8rem; }
+        .clear-history-btn { background:none; border:1.5px dashed var(--paper-edge); color: var(--ink-soft); padding:.35rem .9rem; border-radius:30px; font-size:.68rem; cursor:pointer; transition: all .2s; }
+        .clear-history-btn:hover { border-color:#b0492f; color:#b0492f; }
+        body.dark-mode .history-song-item { background: #1a251f; border-color: #2c3d32; }
+        body.dark-mode .history-song-title { color: #e8ce8a; }
+        body.dark-mode .history-song-number { background: #133426; color: #e8ce8a; }
+        body.dark-mode .clear-history-btn { border-color: #2c3d32; color: #a99c7d; }
 
         footer { text-align: center; padding: 0.8rem; background: var(--paper-warm); color: var(--ink-soft); font-size: 0.62rem; border-top: 1px solid var(--paper-edge); letter-spacing:.03em; }
         footer i { color: var(--gold-dim); margin-right:.3rem; }
@@ -230,6 +263,16 @@
         body.dark-mode .platform-steps li { border-bottom-color: #2c3d32; color:#ece3cf; }
         body.dark-mode .download-intro { color:#a99c7d; }
 
+        /* ===== Print styles ===== */
+        @media print {
+            body { background: #fff !important; padding: 0; }
+            .header, .search-section, .tab-bar, .song-toolbar, .settings-btn, .install-btn, .toast-message, footer, .settings-modal, .download-modal, .fav-star { display: none !important; }
+            .app-container { box-shadow: none; border-radius: 0; }
+            .song-lyrics { border: none; background: #fff; padding: 0; font-size: 14pt; line-height: 1.9; box-shadow: none; }
+            .song-header { padding-left: 0; }
+            .song-header::before { display: none; }
+        }
+
         @media (max-width: 750px) {
             body { padding: 0.5rem; }
             .settings-btn { top: 10px; right: 12px; width: 32px; height: 32px; font-size: 0.9rem; }
@@ -237,6 +280,7 @@
             .song-title { font-size: 1.1rem; }
             .song-lyrics { font-size: 0.85rem; line-height: 1.7; }
             .tab-btn { padding: 0.3rem 0.8rem; font-size: 0.7rem; }
+            .action-btn { padding: 0.4rem 0.75rem; font-size: 0.68rem; }
         }
     </style>
 </head>
@@ -264,8 +308,15 @@
                 <div class="tab-bar">
                     <button id="tabAllBtn" class="tab-btn active">🎵 All Songs</button>
                     <button id="tabFavBtn" class="tab-btn">⭐ Favourites</button>
+                    <button id="tabHistoryBtn" class="tab-btn">🕘 History</button>
                 </div>
                 <div id="allSongsList" class="song-list">
+                    <div class="song-toolbar">
+                        <button id="randomBtn" class="action-btn random-btn"><i class="fas fa-dice"></i> Random</button>
+                        <button id="copyBtn" class="action-btn"><i class="fas fa-copy"></i> Copy</button>
+                        <button id="shareBtn" class="action-btn"><i class="fas fa-share-alt"></i> Share</button>
+                        <button id="printBtn" class="action-btn"><i class="fas fa-print"></i> Print</button>
+                    </div>
                     <div class="song-header">
                         <h2 class="song-title">
                             <span>Loading...</span>
@@ -277,6 +328,9 @@
                 </div>
                 <div id="favSongsList" class="fav-list">
                     <div class="empty-fav">⭐ No favourites yet. Click the star on any song to add!</div>
+                </div>
+                <div id="historySongsList" class="fav-list">
+                    <div class="empty-fav">🕘 No history yet. Songs you open will show up here.</div>
                 </div>
             </div>
         </div>
@@ -371,6 +425,8 @@
         let songsDatabase = [];
         let currentSong = null;
         let favourites = [];
+        let history = [];
+        const MAX_HISTORY = 20;
 
 
         let viewport = document.querySelector('meta[name="viewport"]');
@@ -453,18 +509,91 @@
             });
         }
 
-        function selectSong(number) {
+        /* ===== History ===== */
+        function loadHistory() {
+            const saved = localStorage.getItem('churchHistory');
+            if (saved) {
+                try {
+                    history = JSON.parse(saved);
+                } catch(e) { history = []; }
+            }
+            renderHistoryList();
+        }
+
+        function saveHistoryEntry(songNumber) {
+            history = history.filter(n => n !== songNumber);
+            history.unshift(songNumber);
+            if (history.length > MAX_HISTORY) history = history.slice(0, MAX_HISTORY);
+            localStorage.setItem('churchHistory', JSON.stringify(history));
+            renderHistoryList();
+        }
+
+        function clearHistory() {
+            history = [];
+            localStorage.removeItem('churchHistory');
+            renderHistoryList();
+            showToast('🕘 History cleared');
+        }
+
+        function renderHistoryList() {
+            const container = document.getElementById('historySongsList');
+            if (!container || !songsDatabase.length) return;
+
+            if (history.length === 0) {
+                container.innerHTML = '<div class="empty-fav">🕘 No history yet. Songs you open will show up here.</div>';
+                return;
+            }
+
+            const histSongs = history
+                .map(num => songsDatabase.find(s => s.number === num))
+                .filter(Boolean);
+
+            container.innerHTML = `
+                <div class="history-clear-wrap">
+                    <button id="clearHistoryBtn" class="clear-history-btn"><i class="fas fa-trash"></i> Clear history</button>
+                </div>
+                ${histSongs.map(song => `
+                    <div class="history-song-item" data-num="${song.number}">
+                        <div class="history-song-title">
+                            <span class="history-song-number">#${song.number}</span>
+                            <span>${escapeHtml(song.title)}</span>
+                        </div>
+                        <i class="fas fa-chevron-left" style="color:var(--ink-soft);font-size:.7rem;"></i>
+                    </div>
+                `).join('')}
+            `;
+
+            document.querySelectorAll('.history-song-item').forEach(el => {
+                el.addEventListener('click', () => {
+                    selectSong(parseInt(el.dataset.num));
+                    document.getElementById('tabAllBtn').click();
+                    document.getElementById('searchInput').value = '';
+                });
+            });
+
+            const clearBtn = document.getElementById('clearHistoryBtn');
+            if (clearBtn) clearBtn.addEventListener('click', clearHistory);
+        }
+
+        function selectSong(number, skipHistory) {
             const song = songsDatabase.find(s => s.number === number);
             if (song) {
                 currentSong = song;
                 displaySong(song);
                 updateStarButton();
+                if (!skipHistory) saveHistoryEntry(song.number);
             }
         }
 
         function displaySong(song) {
             const lyricsHtml = song.lyrics.replace(/\n/g, '<br>');
             document.getElementById('allSongsList').innerHTML = `
+                <div class="song-toolbar">
+                    <button id="randomBtn" class="action-btn random-btn"><i class="fas fa-dice"></i> Random</button>
+                    <button id="copyBtn" class="action-btn"><i class="fas fa-copy"></i> Copy</button>
+                    <button id="shareBtn" class="action-btn"><i class="fas fa-share-alt"></i> Share</button>
+                    <button id="printBtn" class="action-btn"><i class="fas fa-print"></i> Print</button>
+                </div>
                 <div class="song-header">
                     <h2 class="song-title">
                         <span>${escapeHtml(song.title)}</span>
@@ -478,6 +607,7 @@
             if (starBtn) {
                 starBtn.addEventListener('click', () => toggleFavourite(song.number));
             }
+            initToolbar();
         }
 
         function escapeHtml(str) {
@@ -492,6 +622,68 @@
             toast.textContent = message;
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        /* ===== Random / Copy / Share / Print toolbar ===== */
+        function pickRandomSong() {
+            if (!songsDatabase.length) return;
+            let candidates = songsDatabase;
+            if (songsDatabase.length > 1 && currentSong) {
+                candidates = songsDatabase.filter(s => s.number !== currentSong.number);
+            }
+            const song = candidates[Math.floor(Math.random() * candidates.length)];
+            selectSong(song.number);
+            showToast(`🎲 ${song.title}`);
+        }
+
+        async function copyCurrentSong() {
+            if (!currentSong) return;
+            const text = `${currentSong.title} (#${currentSong.number})\n\n${currentSong.lyrics}`;
+            try {
+                await navigator.clipboard.writeText(text);
+                showToast('📋 Lyrics copied!');
+            } catch (e) {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                try { document.execCommand('copy'); showToast('📋 Lyrics copied!'); }
+                catch (e2) { showToast('⚠️ Could not copy'); }
+                document.body.removeChild(ta);
+            }
+        }
+
+        async function shareCurrentSong() {
+            if (!currentSong) return;
+            const text = `${currentSong.title} (#${currentSong.number})\n\n${currentSong.lyrics}\n\n✝ Christ the Savior Church`;
+            if (navigator.share) {
+                try {
+                    await navigator.share({ title: currentSong.title, text: text });
+                } catch (e) {
+                    /* user cancelled share — no action needed */
+                }
+            } else {
+                copyCurrentSong();
+                showToast('📋 Sharing not supported — lyrics copied instead');
+            }
+        }
+
+        function printCurrentSong() {
+            if (!currentSong) return;
+            window.print();
+        }
+
+        function initToolbar() {
+            const randomBtn = document.getElementById('randomBtn');
+            const copyBtn = document.getElementById('copyBtn');
+            const shareBtn = document.getElementById('shareBtn');
+            const printBtn = document.getElementById('printBtn');
+            if (randomBtn) randomBtn.addEventListener('click', pickRandomSong);
+            if (copyBtn) copyBtn.addEventListener('click', copyCurrentSong);
+            if (shareBtn) shareBtn.addEventListener('click', shareCurrentSong);
+            if (printBtn) printBtn.addEventListener('click', printCurrentSong);
         }
 
 
@@ -563,26 +755,42 @@
         function initTabs() {
             const tabAllBtn = document.getElementById('tabAllBtn');
             const tabFavBtn = document.getElementById('tabFavBtn');
+            const tabHistoryBtn = document.getElementById('tabHistoryBtn');
             const allSongsDiv = document.getElementById('allSongsList');
             const favSongsDiv = document.getElementById('favSongsList');
+            const historySongsDiv = document.getElementById('historySongsList');
+
+            function activate(btn) {
+                [tabAllBtn, tabFavBtn, tabHistoryBtn].forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
 
             if (tabAllBtn) {
                 tabAllBtn.addEventListener('click', () => {
-                    tabAllBtn.classList.add('active');
-                    tabFavBtn.classList.remove('active');
+                    activate(tabAllBtn);
                     allSongsDiv.style.display = 'block';
                     favSongsDiv.style.display = 'none';
+                    historySongsDiv.style.display = 'none';
 
                     document.getElementById('searchInput').value = '';
                 });
             }
             if (tabFavBtn) {
                 tabFavBtn.addEventListener('click', () => {
-                    tabFavBtn.classList.add('active');
-                    tabAllBtn.classList.remove('active');
+                    activate(tabFavBtn);
                     allSongsDiv.style.display = 'none';
                     favSongsDiv.style.display = 'block';
+                    historySongsDiv.style.display = 'none';
                     renderFavouritesList();
+                });
+            }
+            if (tabHistoryBtn) {
+                tabHistoryBtn.addEventListener('click', () => {
+                    activate(tabHistoryBtn);
+                    allSongsDiv.style.display = 'none';
+                    favSongsDiv.style.display = 'none';
+                    historySongsDiv.style.display = 'block';
+                    renderHistoryList();
                 });
             }
         }
@@ -700,7 +908,8 @@
                 songsDatabase = window.songsDB;
                 songsDatabase.sort((a,b) => a.number - b.number);
                 loadFavourites();
-                selectSong(songsDatabase[0].number);
+                loadHistory();
+                selectSong(songsDatabase[0].number, true);
                 initTabs();
                 initSearch();
                 console.log('✅ Loaded', songsDatabase.length, 'songs successfully');
@@ -708,7 +917,8 @@
                 songsDatabase = songsDB;
                 songsDatabase.sort((a,b) => a.number - b.number);
                 loadFavourites();
-                selectSong(songsDatabase[0].number);
+                loadHistory();
+                selectSong(songsDatabase[0].number, true);
                 initTabs();
                 initSearch();
                 console.log('✅ Loaded', songsDatabase.length, 'songs successfully');
