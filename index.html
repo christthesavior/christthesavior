@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Christ the Savior Church — Worship Songbook</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#111111">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -576,135 +578,31 @@
             });
             searchBtn.addEventListener('click', searchSong);
 
-
             suggestionsDiv.addEventListener('click', (e) => {
                 const item = e.target.closest('.suggestion-item');
-                if (item && item.dataset.num) {
-                    selectSong(parseInt(item.dataset.num));
+                if (item) {
+                    const num = parseInt(item.dataset.num);
+                    selectSong(num);
                     suggestionsDiv.classList.remove('active');
                     searchInput.value = '';
-                    lastSearch = '';
-                }
-            });
-
-
-            document.addEventListener('click', (e) => {
-                if (!searchInput.contains(e.target) && !suggestionsDiv.contains(e.target)) {
-                    suggestionsDiv.classList.remove('active');
                 }
             });
         }
 
+        window.addEventListener('DOMContentLoaded', () => {
+            initSettings();
+            initTabs();
+            initSearch();
+            loadFavourites();
 
-        function initApp() {
-            if (window.songsDB && window.songsDB.length > 0) {
-                songsDatabase = window.songsDB;
-                songsDatabase.sort((a,b) => a.number - b.number);
-                loadFavourites();
-                selectSong(songsDatabase[0].number);
-                initTabs();
-                initSearch();
-                console.log('✅ Loaded', songsDatabase.length, 'songs successfully');
-            } else if (typeof songsDB !== 'undefined' && songsDB.length > 0) {
-                songsDatabase = songsDB;
-                songsDatabase.sort((a,b) => a.number - b.number);
-                loadFavourites();
-                selectSong(songsDatabase[0].number);
-                initTabs();
-                initSearch();
-                console.log('✅ Loaded', songsDatabase.length, 'songs successfully');
-            } else {
-                setTimeout(initApp, 100);
+            if (typeof window.songsData !== 'undefined') {
+                songsDatabase = window.songsData;
+                selectSong(1);
             }
-        }
-
-
-        initSettings();
-        initApp();
+        });
     </script>
-
-
-    <div class="gpt-loader">
-        <div class="glow"></div>
-        <div class="circle"></div>
-        <img src="https://i.imgur.com/5ZxgbZG.png" class="logo">
-    </div>
-
-    <style>
-        .gpt-loader{
-            position:fixed;
-            inset:0;
-            background:#f7f4ef;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            overflow:hidden;
-            z-index:999999;
-            animation:fadeOut 1s ease forwards;
-            animation-delay:3.8s;
-        }
-        body.dark-mode .gpt-loader { background: #0a120d; }
-        .logo{
-            width:220px;
-            position:relative;
-            z-index:5;
-            opacity:0;
-            animation:
-            intro 1.8s cubic-bezier(.22,.9,.24,1) forwards,
-            idle 4s ease-in-out infinite 2s;
-            filter:drop-shadow(0 0 18px rgba(0,0,0,0.08));
-        }
-        .glow{
-            position:absolute;
-            width:260px;
-            height:260px;
-            border-radius:50%;
-            background:radial-gradient(circle, rgba(201,161,72,0.22), rgba(201,161,72,0.06), transparent 72%);
-            filter:blur(26px);
-            animation:pulse 4s ease-in-out infinite;
-        }
-        .circle{
-            position:absolute;
-            width:245px;
-            height:245px;
-            border-radius:50%;
-            border:1px solid rgba(201,161,72,0.16);
-            animation:spin 18s linear infinite;
-        }
-        .circle::before{
-            content:"";
-            position:absolute;
-            top:-4px;
-            left:50%;
-            transform:translateX(-50%);
-            width:8px;
-            height:8px;
-            border-radius:50%;
-            background:#c9a148;
-            box-shadow:0 0 15px rgba(201,161,72,0.9), 0 0 30px rgba(201,161,72,0.5);
-        }
-        @keyframes intro{
-            0%{ opacity:0; transform: scale(0.72) rotate(-8deg); filter: blur(8px) drop-shadow(0 0 0 rgba(0,0,0,0)); }
-            45%{ opacity:1; transform: scale(1.04) rotate(1deg); filter: blur(0px) drop-shadow(0 0 25px rgba(201,161,72,0.18)); }
-            100%{ opacity:1; transform: scale(1) rotate(0deg); filter: blur(0px) drop-shadow(0 0 18px rgba(0,0,0,0.08)); }
-        }
-        @keyframes idle{
-            0%{ transform:translateY(0px); }
-            50%{ transform:translateY(-7px); }
-            100%{ transform:translateY(0px); }
-        }
-        @keyframes pulse{
-            0%{ transform:scale(1); opacity:0.55; }
-            50%{ transform:scale(1.08); opacity:1; }
-            100%{ transform:scale(1); opacity:0.55; }
-        }
-        @keyframes spin{
-            from{ transform:rotate(0deg); }
-            to{ transform:rotate(360deg); }
-        }
-        @keyframes fadeOut{
-            to{ opacity:0; visibility:hidden; }
-        }
-    </style>
+    <script>if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("sw.js");
+    }</script>
 </body>
 </html>
