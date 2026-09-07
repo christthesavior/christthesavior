@@ -201,19 +201,39 @@
         .toast-message.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
         .install-btn {
-            position: absolute; top: 12px; left: 16px;
+            position: absolute; top: 12px; right: 58px;
             background: rgba(232, 206, 138, 0.14); border: 1px solid rgba(232,206,138,.3);
-            color: var(--gold-light); padding: 0 12px; height: 36px; border-radius: 20px; cursor: pointer;
-            font-size: 0.7rem; font-weight: 700; letter-spacing: .04em; display: none; align-items: center; gap: 6px;
-            transition: all 0.3s var(--ease);
+            color: var(--gold-light); width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
+            font-size: 1rem; transition: all 0.3s var(--ease);
         }
-        .install-btn.visible { display: inline-flex; }
         .install-btn:hover { background: rgba(232, 206, 138, 0.28); }
+
+        /* ===== Download / Install modal ===== */
+        .download-modal-content { max-width: 420px; }
+        .download-modal-content h3 { margin-bottom: .3rem; }
+        .download-intro { text-align:center; font-size:.72rem; color: var(--ink-soft); margin-bottom: 1rem; }
+        .platform-tabs { display:flex; gap:.4rem; flex-wrap:wrap; justify-content:center; margin-bottom: 1rem; }
+        .platform-tab { background: none; border: 2px solid var(--paper-edge); color: var(--ink-soft); padding: .35rem .7rem; border-radius: 30px; font-size: .68rem; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:.35rem; transition: all .2s; }
+        .platform-tab.active { background: var(--spine); border-color: var(--spine); color: var(--gold-light); }
+        .platform-tab:not(.active):hover { border-color: var(--gold); }
+        .platform-panel { display:none; }
+        .platform-panel.active { display:block; animation: fadeIn .3s ease; }
+        .platform-steps { list-style:none; counter-reset: step; }
+        .platform-steps li { counter-increment: step; position:relative; padding: .5rem 0 .5rem 2rem; font-size: .78rem; line-height:1.5; border-bottom: 1px dashed var(--paper-edge); color: var(--ink); }
+        .platform-steps li:last-child { border-bottom:none; }
+        .platform-steps li::before { content: counter(step); position:absolute; left:0; top: .45rem; width:20px; height:20px; border-radius:50%; background: var(--gold); color: var(--spine); font-size:.65rem; font-weight:800; display:flex; align-items:center; justify-content:center; }
+        .native-install-btn { width:100%; padding:.7rem; background: var(--spine); color: var(--gold-light); border:none; border-radius:40px; font-weight:700; font-size:.8rem; cursor:pointer; margin-top: .9rem; display:none; align-items:center; justify-content:center; gap:.5rem; transition: transform .15s var(--ease); }
+        .native-install-btn.visible { display:flex; }
+        .native-install-btn:hover { transform: translateY(-1px); }
+        body.dark-mode .platform-tab { border-color: #2c3d32; color: #a99c7d; }
+        body.dark-mode .platform-tab.active { background: #133426; border-color:#133426; color:#e8ce8a; }
+        body.dark-mode .platform-steps li { border-bottom-color: #2c3d32; color:#ece3cf; }
+        body.dark-mode .download-intro { color:#a99c7d; }
 
         @media (max-width: 750px) {
             body { padding: 0.5rem; }
             .settings-btn { top: 10px; right: 12px; width: 32px; height: 32px; font-size: 0.9rem; }
-            .install-btn { top: 10px; left: 12px; height: 32px; font-size: 0.62rem; padding: 0 10px; }
+            .install-btn { top: 10px; right: 52px; width: 32px; height: 32px; font-size: 0.9rem; }
             .song-title { font-size: 1.1rem; }
             .song-lyrics { font-size: 0.85rem; line-height: 1.7; }
             .tab-btn { padding: 0.3rem 0.8rem; font-size: 0.7rem; }
@@ -226,7 +246,7 @@
             <div class="eyebrow">Est. in worship</div>
             <h1>✝ CHRIST THE SAVIOR <span>CHURCH</span> ✝</h1>
             <p>Worship Songbook · 59 Songs of Praise</p>
-            <button id="installBtn" class="install-btn"><i class="fas fa-download"></i> INSTALL</button>
+            <button id="installBtn" class="install-btn" title="Download App"><i class="fas fa-download"></i></button>
             <button id="settingsBtn" class="settings-btn"><i class="fas fa-cog"></i></button>
         </div>
 
@@ -285,6 +305,59 @@
                 <div id="fontPreview" class="font-preview">✝ Amazing grace, how sweet the sound ✝</div>
             </div>
             <button id="closeSettingsBtn" class="close-settings-btn"><i class="fas fa-check"></i> Close</button>
+        </div>
+    </div>
+
+    <div id="downloadModal" class="settings-modal">
+        <div class="settings-modal-content download-modal-content">
+            <h3><i class="fas fa-download"></i> Download the App</h3>
+            <div class="download-intro">Install this songbook on your device and use it even without internet.</div>
+
+            <div class="platform-tabs">
+                <button class="platform-tab" data-platform="android"><i class="fab fa-android"></i> Android</button>
+                <button class="platform-tab" data-platform="ios"><i class="fab fa-apple"></i> iPhone/iPad</button>
+                <button class="platform-tab" data-platform="windows"><i class="fab fa-windows"></i> Windows</button>
+                <button class="platform-tab" data-platform="mac"><i class="fas fa-desktop"></i> Mac</button>
+            </div>
+
+            <div class="platform-panel" data-platform="android">
+                <ol class="platform-steps">
+                    <li>Open this page in <strong>Chrome</strong>.</li>
+                    <li>Tap the button below, or the ⋮ menu → <strong>"Install app"</strong>.</li>
+                    <li>Confirm by tapping <strong>Install</strong>.</li>
+                    <li>The app icon appears on your Home Screen and opens full‑screen — works offline too.</li>
+                </ol>
+            </div>
+
+            <div class="platform-panel" data-platform="ios">
+                <ol class="platform-steps">
+                    <li>Open this page in <strong>Safari</strong> (must be Safari, not Chrome).</li>
+                    <li>Tap the <strong>Share</strong> icon <i class="fas fa-share-square"></i> at the bottom of the screen.</li>
+                    <li>Scroll down and tap <strong>"Add to Home Screen"</strong>.</li>
+                    <li>Tap <strong>Add</strong> (top right). The app icon appears on your Home Screen — works offline too.</li>
+                </ol>
+            </div>
+
+            <div class="platform-panel" data-platform="windows">
+                <ol class="platform-steps">
+                    <li>Open this page in <strong>Chrome</strong> or <strong>Edge</strong>.</li>
+                    <li>Tap the button below, or click the install icon <i class="fas fa-plus-square"></i> in the address bar.</li>
+                    <li>Click <strong>Install</strong>.</li>
+                    <li>The app opens in its own window with a Start Menu / taskbar shortcut, just like any program.</li>
+                </ol>
+            </div>
+
+            <div class="platform-panel" data-platform="mac">
+                <ol class="platform-steps">
+                    <li>Open this page in <strong>Chrome</strong>, <strong>Edge</strong>, or <strong>Safari</strong>.</li>
+                    <li>Chrome/Edge: tap the button below, or click the install icon in the address bar → <strong>Install</strong>.</li>
+                    <li>Safari: open the <strong>File</strong> menu → <strong>"Add to Dock"</strong>.</li>
+                    <li>The app appears in Launchpad / Dock and opens in its own window.</li>
+                </ol>
+            </div>
+
+            <button id="nativeInstallBtn" class="native-install-btn"><i class="fas fa-download"></i> Install Now</button>
+            <button id="closeDownloadBtn" class="close-settings-btn"><i class="fas fa-check"></i> Close</button>
         </div>
     </div>
 
@@ -657,36 +730,82 @@
             });
         }
 
-        // ===== PWA: custom "Install" button (Chrome/Edge/Android) =====
+        // ===== PWA: capture the native install prompt when the browser offers it =====
         let deferredInstallPrompt = null;
-        const installBtn = document.getElementById('installBtn');
-
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredInstallPrompt = e;
-            if (installBtn) installBtn.classList.add('visible');
+            const nativeBtn = document.getElementById('nativeInstallBtn');
+            if (nativeBtn) nativeBtn.classList.add('visible');
         });
-
-        if (installBtn) {
-            installBtn.addEventListener('click', async () => {
-                if (!deferredInstallPrompt) {
-                    showToast('📱 Use your browser menu → "Add to Home Screen" / "Install"');
-                    return;
-                }
-                deferredInstallPrompt.prompt();
-                const { outcome } = await deferredInstallPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    showToast('✅ App installed!');
-                }
-                deferredInstallPrompt = null;
-                installBtn.classList.remove('visible');
-            });
-        }
 
         window.addEventListener('appinstalled', () => {
-            if (installBtn) installBtn.classList.remove('visible');
+            const nativeBtn = document.getElementById('nativeInstallBtn');
+            if (nativeBtn) nativeBtn.classList.remove('visible');
             showToast('✅ App installed!');
         });
+
+        // ===== Detect the visitor's platform, to auto-select the right tab =====
+        function detectPlatform() {
+            const ua = navigator.userAgent || '';
+            const platform = navigator.platform || '';
+            if (/iPhone|iPad|iPod/.test(ua) || (platform === 'MacIntel' && navigator.maxTouchPoints > 1)) return 'ios';
+            if (/Android/.test(ua)) return 'android';
+            if (/Win/.test(platform)) return 'windows';
+            if (/Mac/.test(platform)) return 'mac';
+            return 'android';
+        }
+
+        // ===== Download modal: open/close + platform tabs =====
+        function initDownloadModal() {
+            const installBtn = document.getElementById('installBtn');
+            const downloadModal = document.getElementById('downloadModal');
+            const closeDownloadBtn = document.getElementById('closeDownloadBtn');
+            const tabs = document.querySelectorAll('.platform-tab');
+            const panels = document.querySelectorAll('.platform-panel');
+            const nativeBtn = document.getElementById('nativeInstallBtn');
+
+            function selectPlatform(platform) {
+                tabs.forEach(t => t.classList.toggle('active', t.dataset.platform === platform));
+                panels.forEach(p => p.classList.toggle('active', p.dataset.platform === platform));
+            }
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => selectPlatform(tab.dataset.platform));
+            });
+
+            if (installBtn) {
+                installBtn.addEventListener('click', () => {
+                    selectPlatform(detectPlatform());
+                    downloadModal.classList.add('active');
+                });
+            }
+            if (closeDownloadBtn) {
+                closeDownloadBtn.addEventListener('click', () => downloadModal.classList.remove('active'));
+            }
+            if (downloadModal) {
+                downloadModal.addEventListener('click', (e) => {
+                    if (e.target === downloadModal) downloadModal.classList.remove('active');
+                });
+            }
+            if (nativeBtn) {
+                nativeBtn.addEventListener('click', async () => {
+                    if (!deferredInstallPrompt) {
+                        showToast('📱 Follow the steps above for your device');
+                        return;
+                    }
+                    deferredInstallPrompt.prompt();
+                    const { outcome } = await deferredInstallPrompt.userChoice;
+                    if (outcome === 'accepted') {
+                        showToast('✅ App installed!');
+                        downloadModal.classList.remove('active');
+                    }
+                    deferredInstallPrompt = null;
+                    nativeBtn.classList.remove('visible');
+                });
+            }
+        }
+        initDownloadModal();
     </script>
 
 
