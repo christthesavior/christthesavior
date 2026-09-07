@@ -6,6 +6,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Christ the Savior Church — Worship Songbook</title>
+
+    <!-- ===== PWA: install + offline support ===== -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#133426">
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- iPhone/iOS "Add to Home Screen" support -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="CTS Songbook">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+    <!-- ===== End PWA head tags ===== -->
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -186,9 +200,20 @@
         .toast-message { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%) translateY(8px); background: var(--spine); color: var(--gold-light); padding: 9px 18px; border-radius: 50px; font-size: 0.72rem; z-index: 2000; opacity: 0; transition: opacity 0.3s, transform .3s; pointer-events: none; box-shadow: 0 10px 24px rgba(0,0,0,.25); }
         .toast-message.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+        .install-btn {
+            position: absolute; top: 12px; left: 16px;
+            background: rgba(232, 206, 138, 0.14); border: 1px solid rgba(232,206,138,.3);
+            color: var(--gold-light); padding: 0 12px; height: 36px; border-radius: 20px; cursor: pointer;
+            font-size: 0.7rem; font-weight: 700; letter-spacing: .04em; display: none; align-items: center; gap: 6px;
+            transition: all 0.3s var(--ease);
+        }
+        .install-btn.visible { display: inline-flex; }
+        .install-btn:hover { background: rgba(232, 206, 138, 0.28); }
+
         @media (max-width: 750px) {
             body { padding: 0.5rem; }
             .settings-btn { top: 10px; right: 12px; width: 32px; height: 32px; font-size: 0.9rem; }
+            .install-btn { top: 10px; left: 12px; height: 32px; font-size: 0.62rem; padding: 0 10px; }
             .song-title { font-size: 1.1rem; }
             .song-lyrics { font-size: 0.85rem; line-height: 1.7; }
             .tab-btn { padding: 0.3rem 0.8rem; font-size: 0.7rem; }
@@ -201,6 +226,7 @@
             <div class="eyebrow">Est. in worship</div>
             <h1>✝ CHRIST THE SAVIOR <span>CHURCH</span> ✝</h1>
             <p>Worship Songbook · 59 Songs of Praise</p>
+            <button id="installBtn" class="install-btn"><i class="fas fa-download"></i> INSTALL</button>
             <button id="settingsBtn" class="settings-btn"><i class="fas fa-cog"></i></button>
         </div>
 
@@ -621,6 +647,46 @@
 
         initSettings();
         initApp();
+
+        // ===== PWA: register service worker for offline support =====
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(reg => console.log('✅ Service worker registered', reg.scope))
+                    .catch(err => console.warn('Service worker registration failed', err));
+            });
+        }
+
+        // ===== PWA: custom "Install" button (Chrome/Edge/Android) =====
+        let deferredInstallPrompt = null;
+        const installBtn = document.getElementById('installBtn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredInstallPrompt = e;
+            if (installBtn) installBtn.classList.add('visible');
+        });
+
+        if (installBtn) {
+            installBtn.addEventListener('click', async () => {
+                if (!deferredInstallPrompt) {
+                    showToast('📱 Use your browser menu → "Add to Home Screen" / "Install"');
+                    return;
+                }
+                deferredInstallPrompt.prompt();
+                const { outcome } = await deferredInstallPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    showToast('✅ App installed!');
+                }
+                deferredInstallPrompt = null;
+                installBtn.classList.remove('visible');
+            });
+        }
+
+        window.addEventListener('appinstalled', () => {
+            if (installBtn) installBtn.classList.remove('visible');
+            showToast('✅ App installed!');
+        });
     </script>
 
 
