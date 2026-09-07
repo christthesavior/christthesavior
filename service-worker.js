@@ -11,7 +11,7 @@ const CACHE_FILES = [
   './songs.js?v=2',
   './icon-192.png',
   './icon-512.png',
-  './apple-touch-icon.png',
+  './apple-icon.png',
   'https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css'
 ];
