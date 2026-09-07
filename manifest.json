@@ -1,7 +1,7 @@
 {
-  "name": "Christ the Savior Church - Worship Songbook",
-  "short_name": "CTS Songbook",
-  "description": "Christ the Savior Church Worship Songbook - 59 Songs of Praise",
+  "name": "Christ the Savior",
+  "short_name": "Christ the Savior",
+  "description": "Christ the Savior Songbook - 59 Songs of Praise",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
