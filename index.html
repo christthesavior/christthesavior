@@ -263,6 +263,21 @@
         body.dark-mode .platform-steps li { border-bottom-color: #2c3d32; color:#ece3cf; }
         body.dark-mode .download-intro { color:#a99c7d; }
 
+        /* ===== App-or-website prompt (shown 5s after landing on the site) ===== */
+        .app-prompt-content { max-width: 360px; text-align: center; }
+        .app-prompt-icon { width: 64px; height: 64px; border-radius: 20px; background: linear-gradient(135deg, var(--spine-mid), var(--spine-dark)); color: var(--gold-light); display:flex; align-items:center; justify-content:center; font-size: 1.6rem; margin: 0 auto 0.9rem; box-shadow: 0 10px 22px rgba(19,52,38,.3); }
+        .app-prompt-content h3 { margin-bottom: 0.4rem; }
+        .app-prompt-text { font-size: 0.78rem; color: var(--ink-soft); line-height: 1.6; margin-bottom: 1.2rem; }
+        .app-prompt-buttons { display: flex; flex-direction: column; gap: 0.6rem; }
+        .app-prompt-btn { width: 100%; padding: 0.75rem; border-radius: 40px; font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: transform .15s var(--ease), box-shadow .15s; display:flex; align-items:center; justify-content:center; gap:0.5rem; }
+        .app-prompt-btn.primary { background: var(--spine); color: var(--gold-light); border: none; }
+        .app-prompt-btn.primary:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(19,52,38,.35); }
+        .app-prompt-btn.secondary { background: none; color: var(--ink-soft); border: 1.5px solid var(--paper-edge); }
+        .app-prompt-btn.secondary:hover { border-color: var(--gold); color: var(--ink); }
+        body.dark-mode .app-prompt-text { color: #a99c7d; }
+        body.dark-mode .app-prompt-btn.secondary { border-color: #2c3d32; color: #a99c7d; }
+        body.dark-mode .app-prompt-btn.secondary:hover { border-color: var(--gold); color: #ece3cf; }
+
         /* ===== Print styles ===== */
         @media print {
             body { background: #fff !important; padding: 0; }
@@ -412,6 +427,18 @@
 
             <button id="nativeInstallBtn" class="native-install-btn"><i class="fas fa-download"></i> Install Now</button>
             <button id="closeDownloadBtn" class="close-settings-btn"><i class="fas fa-check"></i> Close</button>
+        </div>
+    </div>
+
+    <div id="appPromptModal" class="settings-modal">
+        <div class="settings-modal-content app-prompt-content">
+            <div class="app-prompt-icon"><i class="fas fa-church"></i></div>
+            <h3>Open the App?</h3>
+            <div class="app-prompt-text">You have the Church Hymns app — it opens faster and even works without internet. You can open it or continue on the website.</div>
+            <div class="app-prompt-buttons">
+                <button id="appPromptOpenBtn" class="app-prompt-btn primary"><i class="fas fa-mobile-alt"></i> Open App</button>
+                <button id="appPromptContinueBtn" class="app-prompt-btn secondary">Continue on Website</button>
+            </div>
         </div>
     </div>
 
@@ -952,6 +979,7 @@
         window.addEventListener('appinstalled', () => {
             const nativeBtn = document.getElementById('nativeInstallBtn');
             if (nativeBtn) nativeBtn.classList.remove('visible');
+            localStorage.setItem('churchAppInstalled', '1');
             showToast('✅ App installed!');
         });
 
@@ -1016,6 +1044,68 @@
             }
         }
         initDownloadModal();
+
+        // ===== "Open app or continue on website" prompt (shown once, 5s after landing) =====
+        function isRunningStandalone() {
+            return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+        }
+
+        function initAppPrompt() {
+            if (isRunningStandalone()) return; // already inside the installed app — never show
+
+            const promptModal = document.getElementById('appPromptModal');
+            const openBtn = document.getElementById('appPromptOpenBtn');
+            const continueBtn = document.getElementById('appPromptContinueBtn');
+            if (!promptModal) return;
+
+            if (sessionStorage.getItem('appPromptShown') === '1') return;
+
+            setTimeout(() => {
+                if (isRunningStandalone()) return;
+                promptModal.classList.add('active');
+                sessionStorage.setItem('appPromptShown', '1');
+            }, 5000);
+
+            if (openBtn) {
+                openBtn.addEventListener('click', async () => {
+                    promptModal.classList.remove('active');
+
+                    // Best-effort detection of whether the app is already installed:
+                    // 1) A flag we set ourselves when the 'appinstalled' event fired earlier.
+                    // 2) The browser's own getInstalledRelatedApps() check, where supported.
+                    let installed = localStorage.getItem('churchAppInstalled') === '1';
+                    if (!installed && 'getInstalledRelatedApps' in navigator) {
+                        try {
+                            const related = await navigator.getInstalledRelatedApps();
+                            installed = related.length > 0;
+                        } catch (e) { /* not supported / blocked — ignore */ }
+                    }
+
+                    if (installed) {
+                        // Note: browsers deliberately don't let a webpage force-launch an
+                        // already-installed PWA (that's an OS-level permission, kept out of
+                        // JS reach for privacy/security reasons). The closest thing we can do
+                        // is navigate to the app's own start URL — on some Android browsers
+                        // this hands off to the installed app automatically; everywhere else
+                        // it just reloads the site, so we also point the user to the icon.
+                        showToast('📱 Opening… if nothing happens, tap the app icon on your home screen');
+                        window.location.href = window.location.origin + window.location.pathname;
+                    } else {
+                        const installBtn = document.getElementById('installBtn');
+                        if (installBtn) installBtn.click();
+                    }
+                });
+            }
+            if (continueBtn) {
+                continueBtn.addEventListener('click', () => {
+                    promptModal.classList.remove('active');
+                });
+            }
+            promptModal.addEventListener('click', (e) => {
+                if (e.target === promptModal) promptModal.classList.remove('active');
+            });
+        }
+        initAppPrompt();
     </script>
 
 
