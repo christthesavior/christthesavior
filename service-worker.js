@@ -3,12 +3,12 @@
 // This makes the site work fully OFFLINE after the first visit.
 // ============================================================
 
-const CACHE_VERSION = 'cts-songbook-v1';
+const CACHE_VERSION = 'cts-songbook-v2';
 const CACHE_FILES = [
   './',
   './index.html',
   './manifest.json',
-  './songs.js?v=2',
+  './songs.js?v=1000',
   './icon-192.png',
   './icon-512.png',
   './apple-icon.png',
