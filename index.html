@@ -20,7 +20,7 @@
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
     <!-- ===== End PWA head tags ===== -->
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Quicksand:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Caveat:wght@400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Courier+Prime:ital,wght@0,400;0,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root{
@@ -38,6 +38,7 @@
             --gold-dim: #a9843a;
             --shadow-book: 0 30px 60px -18px rgba(10, 22, 15, 0.45), 0 8px 20px -8px rgba(10,22,15,.25);
             --ease: cubic-bezier(.22,.9,.24,1);
+            --lyrics-scale: 1;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -114,14 +115,21 @@
         .header h1 { font-family: 'Playfair Display', 'Cormorant Garamond', serif; font-size: clamp(1.2rem, 3.4vw, 1.7rem); font-weight: 600; color: #f2e6d5; }
         .header h1 span { color: var(--gold-light); font-style: italic; }
         .header p { margin-top: 0.35rem; color: #cfd9c4; font-size: 0.62rem; letter-spacing: 1.5px; text-transform: uppercase; opacity:.85; }
+        .header-divider { width: 90px; height: 2px; margin: 0.55rem auto 0; border-radius: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity:.8; }
+        .header-top { display:flex; align-items:center; justify-content:center; gap:1rem; position:relative; z-index:0; pointer-events:none; flex-wrap:wrap; }
+        .header-top .church-logo, .header-top .header-text { pointer-events:auto; }
+        .church-logo { width:110px; height:110px; object-fit:contain; flex-shrink:0; background:transparent; }
+        .header-text { text-align:center; }
+        @media (max-width:750px){ .church-logo{ width:72px; height:72px; } }
 
         .settings-btn {
-            position: absolute; top: 12px; right: 16px;
+            position: absolute; top: 12px; right: 16px; z-index: 5;
             background: rgba(232, 206, 138, 0.14); border: 1px solid rgba(232,206,138,.3);
             color: var(--gold-light); width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
             font-size: 1rem; transition: all 0.3s var(--ease);
         }
         .settings-btn:hover { background: rgba(232, 206, 138, 0.28); transform: rotate(45deg); }
+        .settings-btn:active { transform: rotate(45deg) scale(0.92); }
 
         .settings-modal { display: none; position: fixed; inset: 0; background: rgba(10,16,12,.55); backdrop-filter: blur(2px); justify-content: center; align-items: center; z-index: 2000; animation: fadeIn .2s ease; }
         .settings-modal.active { display: flex; }
@@ -160,7 +168,7 @@
 
         .tab-bar { display: flex; gap: 0.5rem; margin-bottom: 1.1rem; border-bottom: 2px solid var(--paper-edge); padding-bottom: 0.5rem; flex-wrap: wrap; }
         .tab-btn { background: none; border: none; padding: 0.4rem 1rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 30px; color: var(--ink-soft); transition: all 0.2s; }
-        .tab-btn.active { background: var(--spine); color: var(--gold-light); }
+        .tab-btn.active { background: var(--spine); color: var(--gold-light); box-shadow: 0 4px 10px rgba(19,52,38,.3); }
         .tab-btn:not(.active):hover { background: rgba(201,161,72,.14); }
         .fav-list { display: none; }
         .fav-list.active { display: block; }
@@ -200,19 +208,51 @@
             padding: 1.2rem 1.25rem;
             border-radius: 18px;
             border: 1px solid var(--paper-edge);
-            font-size: 0.92rem; line-height: 1.85; white-space: pre-wrap; color: #2b2a24;
+            font-size: calc(0.92rem * var(--lyrics-scale, 1)); line-height: 1.85; white-space: pre-wrap; color: #2b2a24;
             box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 1px 2px rgba(0,0,0,.03);
             animation: turnPage .45s var(--ease);
         }
         @keyframes turnPage { from { opacity: 0; transform: perspective(800px) rotateY(-6deg) translateX(-8px); } to { opacity: 1; transform: perspective(800px) rotateY(0) translateX(0); } }
         .lyrics-font-default .song-lyrics { font-family: 'Inter', 'Segoe UI', sans-serif; }
-        .lyrics-font-classic .song-lyrics { font-family: 'Playfair Display', 'Times New Roman', serif; font-size: 0.95rem; }
+        .lyrics-font-classic .song-lyrics { font-family: 'Playfair Display', 'Times New Roman', serif; font-size: calc(0.95rem * var(--lyrics-scale, 1)); }
+        .lyrics-font-elegant .song-lyrics { font-family: 'Cormorant Garamond', serif; font-size: calc(1.08rem * var(--lyrics-scale, 1)); }
+        .lyrics-font-traditional .song-lyrics { font-family: 'EB Garamond', serif; font-size: calc(1.02rem * var(--lyrics-scale, 1)); }
+        .lyrics-font-book .song-lyrics { font-family: 'Lora', 'Georgia', serif; }
+        .lyrics-font-rounded .song-lyrics { font-family: 'Quicksand', sans-serif; }
+        .lyrics-font-clean .song-lyrics { font-family: 'Poppins', sans-serif; }
+        .lyrics-font-friendly .song-lyrics { font-family: 'Nunito', sans-serif; }
+        .lyrics-font-warm .song-lyrics { font-family: 'Merriweather', serif; font-size: calc(0.85rem * var(--lyrics-scale, 1)); }
+        .lyrics-font-handwritten .song-lyrics { font-family: 'Caveat', cursive; font-size: calc(1.3rem * var(--lyrics-scale, 1)); line-height: 1.6; }
+        .lyrics-font-calligraphy .song-lyrics { font-family: 'Dancing Script', cursive; font-size: calc(1.25rem * var(--lyrics-scale, 1)); line-height: 1.7; }
+        .lyrics-font-typewriter .song-lyrics { font-family: 'Courier Prime', 'Courier New', monospace; font-size: calc(0.8rem * var(--lyrics-scale, 1)); }
 
         .favourite-song-item { background: #fffdf7; border: 1px solid var(--paper-edge); border-radius: 14px; padding: 0.75rem 0.85rem; margin-bottom: 0.7rem; cursor: pointer; transition: transform .18s var(--ease), box-shadow .18s, border-color .18s; }
         .favourite-song-item:hover { transform: translateX(5px); box-shadow: 0 8px 18px rgba(19,52,38,.12); border-color: var(--gold); }
         .favourite-song-title { font-weight: 700; color: var(--spine); display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; }
         .favourite-song-number { background: var(--spine); color: var(--gold-light); padding: 0.2rem 0.55rem; border-radius: 20px; font-size: 0.65rem; }
         .empty-fav { text-align: center; color: var(--ink-soft); padding: 1.6rem; font-style: italic; font-size: 0.8rem; }
+
+        /* ===== All-songs index list (shown on load / via List button) ===== */
+        .song-index-list { display:grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap:0.6rem; animation: fadeIn .5s var(--ease); }
+        @media (max-width:520px){ .song-index-list { grid-template-columns: 1fr; } }
+        .index-song-item { display:flex; align-items:center; gap:0.7rem; background:#fffdf7; border:1px solid var(--paper-edge); border-radius:14px; padding:0.65rem 0.9rem; cursor:pointer; transition: transform .18s var(--ease), box-shadow .18s, border-color .18s; min-width:0; }
+        .index-song-item:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(19,52,38,.14); border-color: var(--gold); }
+        .index-song-item:active { transform: translateY(0) scale(0.99); }
+        .index-song-icon { color: var(--gold-dim); font-size: 0.75rem; flex-shrink:0; }
+        .index-song-number { background: var(--spine); color: var(--gold-light); padding: 0.22rem 0.62rem; border-radius: 20px; font-size: 0.68rem; font-weight:700; white-space:nowrap; flex-shrink:0; }
+        .index-song-title { flex:1; font-weight:600; color: var(--ink); font-size:0.85rem; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+        .index-fav-icon { color: var(--gold); font-size:0.8rem; flex-shrink:0; }
+        body.dark-mode .index-song-item { background:#1a251f; border-color:#2c3d32; }
+        body.dark-mode .index-song-title { color:#ece3cf; }
+        body.dark-mode .index-song-number { background:#133426; color:#e8ce8a; }
+
+        /* ===== Text size control (Settings) ===== */
+        .font-size-controls { display:flex; align-items:center; justify-content:center; gap:0.9rem; }
+        .font-size-btn { width:38px; height:38px; border-radius:50%; border:2px solid var(--paper-edge); background:#fff; color:var(--spine); font-weight:800; font-size:0.85rem; cursor:pointer; transition: all .2s var(--ease); }
+        .font-size-btn:hover { border-color:var(--gold); background: rgba(201,161,72,.14); }
+        .font-size-label { font-weight:700; color: var(--spine); font-size:0.85rem; min-width:44px; text-align:center; }
+        body.dark-mode .font-size-btn { background:#1c2822; border-color:#33453a; color:#e8ce8a; }
+        body.dark-mode .font-size-label { color:#e8ce8a; }
 
         /* ===== History list (shares favourite-item styling) ===== */
         .history-song-item { background: #fffdf7; border: 1px solid var(--paper-edge); border-radius: 14px; padding: 0.75rem 0.85rem; margin-bottom: 0.7rem; cursor: pointer; transition: transform .18s var(--ease), box-shadow .18s, border-color .18s; display:flex; align-items:center; justify-content:space-between; gap:.5rem; }
@@ -234,12 +274,13 @@
         .toast-message.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
         .install-btn {
-            position: absolute; top: 12px; right: 58px;
+            position: absolute; top: 12px; right: 58px; z-index: 5;
             background: rgba(232, 206, 138, 0.14); border: 1px solid rgba(232,206,138,.3);
             color: var(--gold-light); width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
             font-size: 1rem; transition: all 0.3s var(--ease);
         }
-        .install-btn:hover { background: rgba(232, 206, 138, 0.28); }
+        .install-btn:hover { background: rgba(232, 206, 138, 0.28); transform: scale(1.08); }
+        .install-btn:active { transform: scale(0.94); }
 
         /* ===== Download / Install modal ===== */
         .download-modal-content { max-width: 420px; }
@@ -262,21 +303,6 @@
         body.dark-mode .platform-tab.active { background: #133426; border-color:#133426; color:#e8ce8a; }
         body.dark-mode .platform-steps li { border-bottom-color: #2c3d32; color:#ece3cf; }
         body.dark-mode .download-intro { color:#a99c7d; }
-
-        /* ===== App-or-website prompt (shown 5s after landing on the site) ===== */
-        .app-prompt-content { max-width: 360px; text-align: center; }
-        .app-prompt-icon { width: 64px; height: 64px; border-radius: 20px; background: linear-gradient(135deg, var(--spine-mid), var(--spine-dark)); color: var(--gold-light); display:flex; align-items:center; justify-content:center; font-size: 1.6rem; margin: 0 auto 0.9rem; box-shadow: 0 10px 22px rgba(19,52,38,.3); }
-        .app-prompt-content h3 { margin-bottom: 0.4rem; }
-        .app-prompt-text { font-size: 0.78rem; color: var(--ink-soft); line-height: 1.6; margin-bottom: 1.2rem; }
-        .app-prompt-buttons { display: flex; flex-direction: column; gap: 0.6rem; }
-        .app-prompt-btn { width: 100%; padding: 0.75rem; border-radius: 40px; font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: transform .15s var(--ease), box-shadow .15s; display:flex; align-items:center; justify-content:center; gap:0.5rem; }
-        .app-prompt-btn.primary { background: var(--spine); color: var(--gold-light); border: none; }
-        .app-prompt-btn.primary:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(19,52,38,.35); }
-        .app-prompt-btn.secondary { background: none; color: var(--ink-soft); border: 1.5px solid var(--paper-edge); }
-        .app-prompt-btn.secondary:hover { border-color: var(--gold); color: var(--ink); }
-        body.dark-mode .app-prompt-text { color: #a99c7d; }
-        body.dark-mode .app-prompt-btn.secondary { border-color: #2c3d32; color: #a99c7d; }
-        body.dark-mode .app-prompt-btn.secondary:hover { border-color: var(--gold); color: #ece3cf; }
 
         /* ===== Print styles ===== */
         @media print {
@@ -302,9 +328,16 @@
 <body class="lyrics-font-default">
     <div class="app-container">
         <div class="header">
-            <div class="eyebrow">Est. in worship</div>
-            <h1>✝ CHRIST THE SAVIOR <span>CHURCH</span> ✝</h1>
-            <p>Worship Songbook · 59 Songs of Praise</p>
+            <div class="header-top">
+ 
+                <img id="churchLogo" class="church-logo" src="https://i.imgur.com/Vj2ZcMH.png" alt="Church Logo">
+                <div class="header-text">
+                    <div class="eyebrow">Est. in worship</div>
+                    <h1>✝ CHRIST THE SAVIOR <span>CHURCH</span> ✝</h1>
+                    <p>Worship Songbook · 59 Songs of Praise</p>
+                    <div class="header-divider"></div>
+                </div>
+            </div>
             <button id="installBtn" class="install-btn" title="Download App"><i class="fas fa-download"></i></button>
             <button id="settingsBtn" class="settings-btn"><i class="fas fa-cog"></i></button>
         </div>
@@ -326,20 +359,7 @@
                     <button id="tabHistoryBtn" class="tab-btn">🕘 History</button>
                 </div>
                 <div id="allSongsList" class="song-list">
-                    <div class="song-toolbar">
-                        <button id="randomBtn" class="action-btn random-btn"><i class="fas fa-dice"></i> Random</button>
-                        <button id="copyBtn" class="action-btn"><i class="fas fa-copy"></i> Copy</button>
-                        <button id="shareBtn" class="action-btn"><i class="fas fa-share-alt"></i> Share</button>
-                        <button id="printBtn" class="action-btn"><i class="fas fa-print"></i> Print</button>
-                    </div>
-                    <div class="song-header">
-                        <h2 class="song-title">
-                            <span>Loading...</span>
-                            <button class="fav-star"><i class="far fa-star"></i></button>
-                        </h2>
-                        <span class="song-number">#0</span>
-                    </div>
-                    <div class="song-lyrics">Please wait, loading songs...</div>
+                    <div class="empty-fav">Please wait, loading songs...</div>
                 </div>
                 <div id="favSongsList" class="fav-list">
                     <div class="empty-fav">⭐ No favourites yet. Click the star on any song to add!</div>
@@ -366,10 +386,28 @@
                 </div>
             </div>
             <div class="setting-item">
+                <label>🔤 Text Size</label>
+                <div class="font-size-controls">
+                    <button id="fontSizeDecrease" class="font-size-btn" title="Smaller text">A-</button>
+                    <span id="fontSizeLabel" class="font-size-label">100%</span>
+                    <button id="fontSizeIncrease" class="font-size-btn" title="Larger text">A+</button>
+                </div>
+            </div>
+            <div class="setting-item">
                 <label>📖 Song Lyrics Font</label>
                 <select id="fontSelect">
                     <option value="default">Modern (Sans-serif)</option>
                     <option value="classic">Classic (Serif)</option>
+                    <option value="elegant">Elegant (Cormorant)</option>
+                    <option value="traditional">Traditional Hymnal</option>
+                    <option value="book">Classic Book (Lora)</option>
+                    <option value="rounded">Rounded Soft</option>
+                    <option value="clean">Clean Sans</option>
+                    <option value="friendly">Friendly Sans</option>
+                    <option value="warm">Warm Serif</option>
+                    <option value="handwritten">Handwritten</option>
+                    <option value="calligraphy">Calligraphy</option>
+                    <option value="typewriter">Typewriter</option>
                 </select>
                 <div id="fontPreview" class="font-preview">✝ Amazing grace, how sweet the sound ✝</div>
             </div>
@@ -427,18 +465,6 @@
 
             <button id="nativeInstallBtn" class="native-install-btn"><i class="fas fa-download"></i> Install Now</button>
             <button id="closeDownloadBtn" class="close-settings-btn"><i class="fas fa-check"></i> Close</button>
-        </div>
-    </div>
-
-    <div id="appPromptModal" class="settings-modal">
-        <div class="settings-modal-content app-prompt-content">
-            <div class="app-prompt-icon"><i class="fas fa-church"></i></div>
-            <h3>Open the App?</h3>
-            <div class="app-prompt-text">You have the Church Hymns app — it opens faster and even works without internet. You can open it or continue on the website.</div>
-            <div class="app-prompt-buttons">
-                <button id="appPromptOpenBtn" class="app-prompt-btn primary"><i class="fas fa-mobile-alt"></i> Open App</button>
-                <button id="appPromptContinueBtn" class="app-prompt-btn secondary">Continue on Website</button>
-            </div>
         </div>
     </div>
 
@@ -536,6 +562,31 @@
             });
         }
 
+        /* ===== Full songs index (shown on load / via "List" button) ===== */
+        function renderSongIndex() {
+            const container = document.getElementById('allSongsList');
+            if (!container || !songsDatabase.length) return;
+
+            container.innerHTML = `
+                <div class="song-index-list">
+                    ${songsDatabase.map(song => `
+                        <div class="index-song-item" data-num="${song.number}">
+                            <i class="fas fa-music index-song-icon"></i>
+                            <span class="index-song-number">#${song.number}</span>
+                            <span class="index-song-title">${escapeHtml(song.title)}</span>
+                            ${isFavourite(song.number) ? '<i class="fas fa-star index-fav-icon"></i>' : ''}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            document.querySelectorAll('.index-song-item').forEach(el => {
+                el.addEventListener('click', () => {
+                    selectSong(parseInt(el.dataset.num));
+                });
+            });
+        }
+
         /* ===== History ===== */
         function loadHistory() {
             const saved = localStorage.getItem('churchHistory');
@@ -616,6 +667,7 @@
             const lyricsHtml = song.lyrics.replace(/\n/g, '<br>');
             document.getElementById('allSongsList').innerHTML = `
                 <div class="song-toolbar">
+                    <button id="backToListBtn" class="action-btn"><i class="fas fa-list"></i> List</button>
                     <button id="randomBtn" class="action-btn random-btn"><i class="fas fa-dice"></i> Random</button>
                     <button id="copyBtn" class="action-btn"><i class="fas fa-copy"></i> Copy</button>
                     <button id="shareBtn" class="action-btn"><i class="fas fa-share-alt"></i> Share</button>
@@ -703,10 +755,12 @@
         }
 
         function initToolbar() {
+            const backToListBtn = document.getElementById('backToListBtn');
             const randomBtn = document.getElementById('randomBtn');
             const copyBtn = document.getElementById('copyBtn');
             const shareBtn = document.getElementById('shareBtn');
             const printBtn = document.getElementById('printBtn');
+            if (backToListBtn) backToListBtn.addEventListener('click', renderSongIndex);
             if (randomBtn) randomBtn.addEventListener('click', pickRandomSong);
             if (copyBtn) copyBtn.addEventListener('click', copyCurrentSong);
             if (shareBtn) shareBtn.addEventListener('click', shareCurrentSong);
@@ -714,17 +768,29 @@
         }
 
 
+        const LYRIC_FONTS = {
+            default: "'Inter', sans-serif",
+            classic: "'Playfair Display', serif",
+            elegant: "'Cormorant Garamond', serif",
+            traditional: "'EB Garamond', serif",
+            book: "'Lora', serif",
+            rounded: "'Quicksand', sans-serif",
+            clean: "'Poppins', sans-serif",
+            friendly: "'Nunito', sans-serif",
+            warm: "'Merriweather', serif",
+            handwritten: "'Caveat', cursive",
+            calligraphy: "'Dancing Script', cursive",
+            typewriter: "'Courier Prime', monospace"
+        };
+
         function applyFont(font) {
-            document.body.classList.remove('lyrics-font-default', 'lyrics-font-classic');
-            if (font === 'classic') {
-                document.body.classList.add('lyrics-font-classic');
-            } else {
-                document.body.classList.add('lyrics-font-default');
-            }
+            if (!LYRIC_FONTS[font]) font = 'default';
+            document.body.classList.remove(...Object.keys(LYRIC_FONTS).map(f => 'lyrics-font-' + f));
+            document.body.classList.add('lyrics-font-' + font);
             localStorage.setItem('lyricsFont', font);
             const preview = document.getElementById('fontPreview');
             if (preview) {
-                preview.style.fontFamily = font === 'classic' ? "'Playfair Display', serif" : "'Inter', sans-serif";
+                preview.style.fontFamily = LYRIC_FONTS[font];
             }
         }
 
@@ -750,6 +816,22 @@
                 applyFont(savedFont);
                 fontSelect.addEventListener('change', (e) => applyFont(e.target.value));
             }
+
+            let lyricsFontScale = parseFloat(localStorage.getItem('lyricsFontScale')) || 1;
+            function applyFontScale(scale) {
+                scale = Math.min(1.6, Math.max(0.7, Math.round(scale * 100) / 100));
+                lyricsFontScale = scale;
+                document.documentElement.style.setProperty('--lyrics-scale', scale);
+                localStorage.setItem('lyricsFontScale', scale);
+                const label = document.getElementById('fontSizeLabel');
+                if (label) label.textContent = Math.round(scale * 100) + '%';
+            }
+            applyFontScale(lyricsFontScale);
+
+            const fontSizeDecrease = document.getElementById('fontSizeDecrease');
+            const fontSizeIncrease = document.getElementById('fontSizeIncrease');
+            if (fontSizeDecrease) fontSizeDecrease.addEventListener('click', () => applyFontScale(lyricsFontScale - 0.1));
+            if (fontSizeIncrease) fontSizeIncrease.addEventListener('click', () => applyFontScale(lyricsFontScale + 0.1));
 
             const savedDarkMode = localStorage.getItem('churchTheme') === 'dark';
             applyDarkMode(savedDarkMode);
@@ -800,6 +882,7 @@
                     historySongsDiv.style.display = 'none';
 
                     document.getElementById('searchInput').value = '';
+                    renderSongIndex();
                 });
             }
             if (tabFavBtn) {
@@ -936,7 +1019,7 @@
                 songsDatabase.sort((a,b) => a.number - b.number);
                 loadFavourites();
                 loadHistory();
-                selectSong(songsDatabase[0].number, true);
+                renderSongIndex();
                 initTabs();
                 initSearch();
                 console.log('✅ Loaded', songsDatabase.length, 'songs successfully');
@@ -945,7 +1028,7 @@
                 songsDatabase.sort((a,b) => a.number - b.number);
                 loadFavourites();
                 loadHistory();
-                selectSong(songsDatabase[0].number, true);
+                renderSongIndex();
                 initTabs();
                 initSearch();
                 console.log('✅ Loaded', songsDatabase.length, 'songs successfully');
@@ -979,7 +1062,6 @@
         window.addEventListener('appinstalled', () => {
             const nativeBtn = document.getElementById('nativeInstallBtn');
             if (nativeBtn) nativeBtn.classList.remove('visible');
-            localStorage.setItem('churchAppInstalled', '1');
             showToast('✅ App installed!');
         });
 
@@ -1044,68 +1126,6 @@
             }
         }
         initDownloadModal();
-
-        // ===== "Open app or continue on website" prompt (shown once, 5s after landing) =====
-        function isRunningStandalone() {
-            return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-        }
-
-        function initAppPrompt() {
-            if (isRunningStandalone()) return; // already inside the installed app — never show
-
-            const promptModal = document.getElementById('appPromptModal');
-            const openBtn = document.getElementById('appPromptOpenBtn');
-            const continueBtn = document.getElementById('appPromptContinueBtn');
-            if (!promptModal) return;
-
-            if (sessionStorage.getItem('appPromptShown') === '1') return;
-
-            setTimeout(() => {
-                if (isRunningStandalone()) return;
-                promptModal.classList.add('active');
-                sessionStorage.setItem('appPromptShown', '1');
-            }, 5000);
-
-            if (openBtn) {
-                openBtn.addEventListener('click', async () => {
-                    promptModal.classList.remove('active');
-
-                    // Best-effort detection of whether the app is already installed:
-                    // 1) A flag we set ourselves when the 'appinstalled' event fired earlier.
-                    // 2) The browser's own getInstalledRelatedApps() check, where supported.
-                    let installed = localStorage.getItem('churchAppInstalled') === '1';
-                    if (!installed && 'getInstalledRelatedApps' in navigator) {
-                        try {
-                            const related = await navigator.getInstalledRelatedApps();
-                            installed = related.length > 0;
-                        } catch (e) { /* not supported / blocked — ignore */ }
-                    }
-
-                    if (installed) {
-                        // Note: browsers deliberately don't let a webpage force-launch an
-                        // already-installed PWA (that's an OS-level permission, kept out of
-                        // JS reach for privacy/security reasons). The closest thing we can do
-                        // is navigate to the app's own start URL — on some Android browsers
-                        // this hands off to the installed app automatically; everywhere else
-                        // it just reloads the site, so we also point the user to the icon.
-                        showToast('📱 Opening… if nothing happens, tap the app icon on your home screen');
-                        window.location.href = window.location.origin + window.location.pathname;
-                    } else {
-                        const installBtn = document.getElementById('installBtn');
-                        if (installBtn) installBtn.click();
-                    }
-                });
-            }
-            if (continueBtn) {
-                continueBtn.addEventListener('click', () => {
-                    promptModal.classList.remove('active');
-                });
-            }
-            promptModal.addEventListener('click', (e) => {
-                if (e.target === promptModal) promptModal.classList.remove('active');
-            });
-        }
-        initAppPrompt();
     </script>
 
 
