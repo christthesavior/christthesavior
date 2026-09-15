@@ -4,14 +4,13 @@
     <meta name="google-site-verification" content="lSp8qSLHvSaGiv4b5zSdFoWIaojvf-iG1SmsV8vgQ6A" />
     <meta name="google-site-verification" content="eK-8dqucYn5f-sInCi6X6LPFUPKXICx6wD5qqAIQmog" />
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Christ the Savior Church — Worship Songbook</title>
 
     <!-- ===== PWA: install + offline support ===== -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#133426">
+    <meta name="theme-color" content="#3F6E8C">
     <meta name="mobile-web-app-capable" content="yes">
-    <!-- iPhone/iOS "Add to Home Screen" support -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="CTS Songbook">
@@ -20,416 +19,347 @@
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
     <!-- ===== End PWA head tags ===== -->
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Quicksand:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Caveat:wght@400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Courier+Prime:ital,wght@0,400;0,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340;0,9..144,460;0,9..144,560;0,9..144,650;1,9..144,420;1,9..144,500&family=Karla:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,600&family=Quicksand:wght@400;600;700&family=Nunito:wght@400;600;800&family=Merriweather:ital,wght@0,300;0,700&family=Caveat:wght@500;700&family=Dancing+Script:wght@500;700&family=Courier+Prime:ital,wght@0,400;0,700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root{
-            /* ===== Token system — "Illuminated Hymnal" ===== */
-            --paper: #f8f1e0;
-            --paper-warm: #f2e6c9;
-            --paper-edge: #e3d1a3;
-            --ink: #2b2414;
-            --ink-soft: #6b5d40;
-            --spine: #133426;
-            --spine-dark: #0a2018;
-            --spine-mid: #1c4a34;
-            --gold: #c9a148;
-            --gold-light: #e8ce8a;
-            --gold-dim: #a9843a;
-            --shadow-book: 0 30px 60px -18px rgba(10, 22, 15, 0.45), 0 8px 20px -8px rgba(10,22,15,.25);
+            /* ===== Token system — "Morning Light" ===== */
+            --bg-1: #f6f1e6;
+            --bg-2: #eee6d4;
+            --surface: #fffdf9;
+            --ink: #262320;
+            --ink-soft: #75705f;
+            --line: #e6dcc4;
+
+            --blue: #3f6e8c;
+            --blue-deep: #2c4f68;
+            --blue-tint: #eaf1f5;
+            --amber: #c98a3f;
+            --amber-deep: #a06b2b;
+            --amber-tint: #faf0dd;
+            --rose: #b96a5e;
+            --rose-deep: #8f4a40;
+            --rose-tint: #f8ece9;
+
+            --shadow-lg: 0 26px 55px -20px rgba(43, 40, 28, 0.28), 0 6px 16px -6px rgba(43,40,28,.14);
+            --shadow-sm: 0 6px 16px -8px rgba(43,40,28,.18);
             --ease: cubic-bezier(.22,.9,.24,1);
             --lyrics-scale: 1;
+            --radius-lg: 26px;
+            --radius-md: 16px;
+            --radius-sm: 10px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Karla', 'Segoe UI', system-ui, sans-serif;
             color: var(--ink);
             min-height: 100vh;
-            padding: clamp(0.6rem, 2vw, 1.6rem);
-            background:
-                radial-gradient(ellipse 900px 500px at 15% -10%, rgba(201,161,72,.12), transparent 60%),
-                radial-gradient(ellipse 700px 500px at 100% 10%, rgba(19,52,38,.10), transparent 55%),
-                linear-gradient(160deg, #e9ded2 0%, #d9cbb2 100%);
-            background-size: 220% 220%;
-            animation: bgFlow 32s ease-in-out infinite alternate;
-            transition: background 0.4s ease;
-            -webkit-tap-highlight-color: transparent;
+            padding: clamp(0.6rem, 2vw, 1.8rem);
+            background: linear-gradient(175deg, var(--bg-1) 0%, var(--bg-2) 100%);
         }
+
+        /* ---- Dark mode: "Vespers" ---- */
         body.dark-mode {
-            background:
-                radial-gradient(ellipse 900px 500px at 15% -10%, rgba(201,161,72,.08), transparent 60%),
-                linear-gradient(160deg, #0c1410 0%, #060a08 100%);
-            background-size: 220% 220%;
-            animation: bgFlow 32s ease-in-out infinite alternate;
+            --bg-1: #10161a; --bg-2: #0a0e11; --surface: #161d22; --ink: #ece6d8; --ink-soft: #93a0a6; --line: #232b30;
+            --blue-tint: #16232b; --amber-tint: #221d14; --rose-tint: #241715;
         }
-        @keyframes bgFlow {
-            0% { background-position: 0% 20%; }
-            50% { background-position: 100% 60%; }
-            100% { background-position: 30% 100%; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-            body, body.dark-mode { animation: none; }
-        }
-        body.dark-mode .app-container { background: #16211b; }
-        body.dark-mode .header { background: linear-gradient(135deg, #0e2a1e 0%, #06140d 100%); }
-        body.dark-mode .search-section { background: #131c17; border-bottom-color: #2c3d32; }
-        body.dark-mode .search-input { background: #1c2822; border-color: #33453a; color: #ece3cf; }
-        body.dark-mode .search-input::placeholder { color: #7c8f7e; }
-        body.dark-mode .song-section { background: #16211b; }
-        body.dark-mode .song-title { color: #e8ce8a; }
-        body.dark-mode .song-lyrics { background: #1a251f; border-color: #2c3d32; color: #ece3cf; }
-        body.dark-mode .song-number { background: #133426; color: #e8ce8a; }
-        body.dark-mode footer { background: #131c17; color: #a99c7d; border-top-color: #2c3d32; }
-        body.dark-mode .settings-modal-content { background: #182119; color: #ece3cf; border: 1px solid #2c3d32; }
-        body.dark-mode .settings-modal-content h3 { color: #e8ce8a; }
-        body.dark-mode .setting-item { border-bottom-color: #2c3d32; }
-        body.dark-mode .setting-item label { color: #e8ce8a; }
-        body.dark-mode .setting-item select { background: #1c2822; border-color: #33453a; color: #ece3cf; }
-        body.dark-mode .font-preview { color: #a99c7d; }
-        body.dark-mode .close-settings-btn { background: #133426; color: #e8ce8a; }
-        body.dark-mode .close-settings-btn:hover { background: #1c4a34; }
-        body.dark-mode .search-btn { background: #133426; color: #e8ce8a; }
-        body.dark-mode .search-btn:hover { background: #1c4a34; }
-        body.dark-mode .suggestion-item { background: #1c2822; color: #ece3cf; border-bottom-color: #2c3d32; }
-        body.dark-mode .suggestion-item:hover { background: #26362c; }
-        body.dark-mode .tab-bar { border-bottom-color: #2c3d32; }
-        body.dark-mode .tab-btn { color: #a99c7d; }
-        body.dark-mode .tab-btn.active { background: #133426; color: #e8ce8a; }
-        body.dark-mode .favourite-song-item { background: #1a251f; border-color: #2c3d32; }
-        body.dark-mode .favourite-song-title { color: #e8ce8a; }
-        body.dark-mode .favourite-song-number { background: #133426; color: #e8ce8a; }
-        body.dark-mode .gpt-loader { background: #0a120d; }
+        body.dark-mode footer,
+        body.dark-mode .install-btn, body.dark-mode .settings-btn { color: #ece6d8; }
 
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
-        }
-
-        /* ---------- Book shell ---------- */
         .app-container {
-            max-width: 900px;
+            max-width: 920px;
             margin: 0 auto;
-            background: var(--paper);
-            border-radius: 22px;
-            box-shadow: var(--shadow-book);
+            background: var(--surface);
+            border-radius: 30px;
+            box-shadow: var(--shadow-lg);
             overflow: hidden;
             position: relative;
+            border: 1px solid var(--line);
             opacity: 0;
-            transform: perspective(1400px) rotateX(4deg) translateY(18px);
-            animation: openBook 1s var(--ease) forwards;
+            transform: translateY(14px);
+            animation: rise .7s var(--ease) forwards;
         }
-        @keyframes openBook { to { opacity: 1; transform: perspective(1400px) rotateX(0) translateY(0); } }
+        @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+        @media (prefers-reduced-motion: reduce) { .app-container, .song-lyrics, .index-song-item { animation: none !important; } }
 
-        .header { background: linear-gradient(135deg, var(--spine-mid) 0%, var(--spine-dark) 100%); padding: 1.5rem 1rem 1.2rem; text-align: center; position: relative; overflow: hidden; }
-        .header::before{ content:""; position:absolute; inset:0; background: repeating-linear-gradient(90deg, rgba(201,161,72,.05) 0 1px, transparent 1px 46px); opacity:.5; pointer-events:none; }
-        .header .eyebrow{ display:inline-flex; align-items:center; gap:.5rem; font-size: .6rem; letter-spacing:.22em; text-transform:uppercase; color: var(--gold-light); opacity:.85; margin-bottom:.35rem; }
-        .header .eyebrow::before, .header .eyebrow::after{ content:""; width:16px; height:1px; background: var(--gold-dim); }
-        .header h1 { font-family: 'Playfair Display', 'Cormorant Garamond', serif; font-size: clamp(1.2rem, 3.4vw, 1.7rem); font-weight: 600; color: #f2e6d5; }
-        .header h1 span { color: var(--gold-light); font-style: italic; }
-        .header p { margin-top: 0.35rem; color: #cfd9c4; font-size: 0.62rem; letter-spacing: 1.5px; text-transform: uppercase; opacity:.85; }
-        .header-divider { width: 90px; height: 2px; margin: 0.55rem auto 0; border-radius: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity:.8; }
-        .header-top { display:flex; align-items:center; justify-content:center; gap:1rem; position:relative; z-index:0; pointer-events:none; flex-wrap:wrap; }
-        .header-top .church-logo, .header-top .header-text { pointer-events:auto; }
-        .church-logo { width:110px; height:110px; object-fit:contain; flex-shrink:0; background:transparent; }
+        /* ---------- Header: light through glass ---------- */
+        .header {
+            position: relative;
+            padding: 1.7rem 1.3rem 1.5rem;
+            text-align: center;
+            overflow: hidden;
+            background:
+                radial-gradient(520px 220px at 12% -20%, rgba(201,138,63,.35), transparent 65%),
+                radial-gradient(560px 260px at 100% 0%, rgba(185,106,94,.28), transparent 60%),
+                linear-gradient(160deg, var(--blue-deep) 0%, #1d3949 100%);
+        }
+        body.dark-mode .header { background:
+                radial-gradient(520px 220px at 12% -20%, rgba(201,138,63,.22), transparent 65%),
+                radial-gradient(560px 260px at 100% 0%, rgba(185,106,94,.18), transparent 60%),
+                linear-gradient(160deg, #0c1a22 0%, #070d11 100%); }
+        .header-top { display:flex; align-items:center; justify-content:center; gap:1rem; flex-wrap:wrap; }
+        .church-logo { width:96px; height:96px; object-fit:contain; flex-shrink:0; -webkit-touch-callout:none; -webkit-user-select:none; user-select:none; }
         .header-text { text-align:center; }
+        .header p.kicker { font-size: .64rem; letter-spacing:.16em; color: var(--amber-deep); background: rgba(255,255,255,.9); display:inline-block; padding: .18rem .7rem; border-radius: 20px; margin-bottom:.55rem; font-weight:700; }
+        body.dark-mode .header p.kicker { background: rgba(255,255,255,.08); color: #e6c07a; }
+        .header h1 { font-family: 'Fraunces', serif; font-optical-sizing: auto; font-weight: 560; font-size: clamp(1.35rem, 3.6vw, 1.9rem); color: #fbf6ea; letter-spacing: -.01em; }
+        .header h1 em { font-style: italic; font-weight: 420; color: #f3c880; }
+        .header p.tagline { margin-top: 0.4rem; color: #cfe0e8; font-size: 0.72rem; }
         @media (max-width:750px){
-            .header-top{ flex-wrap:nowrap; gap:0.6rem; }
-            .church-logo{ width:56px; height:56px; flex-shrink:0; }
-            .header-text{ min-width:0; }
-            .header h1{ font-size: clamp(0.9rem, 4.6vw, 1.3rem); }
-            .header p{ font-size: 0.55rem; }
-            .header-divider{ width:70px; }
+            .header-top{ gap:0.7rem; }
+            .church-logo{ width:52px; height:52px; }
+            .header h1{ font-size: clamp(1.02rem, 5vw, 1.35rem); }
         }
 
-        .settings-btn {
-            position: absolute; top: 12px; right: 16px; z-index: 5;
-            background: rgba(232, 206, 138, 0.14); border: 1px solid rgba(232,206,138,.3);
-            color: var(--gold-light); width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
-            font-size: 1rem; transition: all 0.3s var(--ease);
+        .settings-btn, .install-btn {
+            position: absolute; top: 14px; z-index: 5;
+            background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.25);
+            color: #fbf6ea; width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
+            font-size: 0.95rem; transition: all 0.25s var(--ease);
+            display:flex; align-items:center; justify-content:center;
         }
-        .settings-btn:hover { background: rgba(232, 206, 138, 0.28); transform: rotate(45deg); }
-        .settings-btn:active { transform: rotate(45deg) scale(0.92); }
+        .settings-btn { right: 14px; }
+        .install-btn { right: 58px; }
+        .settings-btn:hover { background: rgba(255,255,255,.26); transform: rotate(35deg); }
+        .install-btn:hover { background: rgba(255,255,255,.26); transform: translateY(-1px); }
+        @media (max-width:750px){ .settings-btn,.install-btn{ width:32px; height:32px; font-size:.85rem; } .install-btn{ right:50px; } .settings-btn{ right:12px; } }
 
-        .settings-modal { display: none; position: fixed; inset: 0; background: rgba(10,16,12,.55); backdrop-filter: blur(2px); justify-content: center; align-items: center; z-index: 2000; animation: fadeIn .2s ease; }
+        /* ---------- Modals ---------- */
+        .settings-modal { display: none; position: fixed; inset: 0; background: rgba(20,24,20,.5); backdrop-filter: blur(3px); justify-content: center; align-items: center; z-index: 2000; animation: fadeIn .2s ease; }
         .settings-modal.active { display: flex; }
-        .settings-modal-content { background: var(--paper); padding: 1.5rem; border-radius: 22px; width: 92%; max-width: 380px; animation: slideUp 0.3s var(--ease); box-shadow: var(--shadow-book); border-top: 3px solid var(--gold); }
-        @keyframes slideUp { from { transform: translateY(28px) scale(.98); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+        .settings-modal-content { background: var(--surface); padding: 1.6rem; border-radius: var(--radius-lg); width: 92%; max-width: 390px; animation: slideUp 0.3s var(--ease); box-shadow: var(--shadow-lg); border-top: 4px solid var(--blue); color: var(--ink); }
+        @keyframes slideUp { from { transform: translateY(24px) scale(.98); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .settings-modal-content h3 { margin-bottom: 1.2rem; color: var(--spine); text-align: center; font-family:'Cormorant Garamond',serif; font-weight:600; font-size: 1.4rem; }
-        .setting-item { margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--paper-edge); }
-        .setting-item label { display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--spine); font-size: 0.85rem; }
-        .setting-item select { width: 100%; padding: 0.6rem; border: 2px solid var(--paper-edge); border-radius: 14px; font-size: 0.8rem; background: #fff; cursor: pointer; color: var(--ink); font-family: 'Inter', sans-serif; }
-        .font-preview { margin-top: 0.5rem; font-size: 0.7rem; color: var(--ink-soft); font-style: italic; }
+        .settings-modal-content h3 { margin-bottom: 1.2rem; color: var(--blue-deep); text-align: center; font-family:'Fraunces',serif; font-weight:560; font-size: 1.35rem; }
+        body.dark-mode .settings-modal-content h3 { color: #e6c07a; }
+        .setting-item { margin-bottom: 1.15rem; padding-bottom: 0.85rem; border-bottom: 1px solid var(--line); }
+        .setting-item label { display: block; font-weight: 700; margin-bottom: 0.5rem; color: var(--ink); font-size: 0.82rem; }
+        .setting-item select { width: 100%; padding: 0.6rem .7rem; border: 1.5px solid var(--line); border-radius: var(--radius-sm); font-size: 0.8rem; background: var(--bg-1); cursor: pointer; color: var(--ink); font-family: 'Karla', sans-serif; }
+        .font-preview { margin-top: 0.5rem; font-size: 0.72rem; color: var(--ink-soft); font-style: italic; }
         .toggle-switch { display: flex; justify-content: space-between; align-items: center; }
-        .toggle-switch span { font-size: 0.8rem; }
-        .toggle-checkbox { width: 48px; height: 24px; background: var(--paper-edge); border-radius: 30px; position: relative; cursor: pointer; transition: 0.3s; }
-        .toggle-checkbox.active { background: var(--spine); }
-        .toggle-checkbox:after { content: ''; width: 20px; height: 20px; background: white; border-radius: 50%; position: absolute; top: 2px; left: 3px; transition: 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,.3); }
-        .toggle-checkbox.active:after { left: 25px; background: var(--gold-light); }
-        .close-settings-btn { width: 100%; padding: 0.7rem; background: var(--spine); color: var(--gold-light); border: none; border-radius: 40px; font-weight: 600; cursor: pointer; margin-top: 0.5rem; font-size: 0.85rem; transition: transform .15s var(--ease), box-shadow .15s; }
-        .close-settings-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(19,52,38,.35); }
+        .toggle-switch span { font-size: 0.8rem; color: var(--ink-soft); }
+        .toggle-checkbox { width: 46px; height: 24px; background: var(--line); border-radius: 30px; position: relative; cursor: pointer; transition: 0.25s; }
+        .toggle-checkbox.active { background: var(--blue); }
+        .toggle-checkbox:after { content: ''; width: 19px; height: 19px; background: white; border-radius: 50%; position: absolute; top: 2.5px; left: 3px; transition: 0.25s; box-shadow: 0 1px 3px rgba(0,0,0,.3); }
+        .toggle-checkbox.active:after { left: 24px; background: var(--amber-tint); }
+        .close-settings-btn { width: 100%; padding: 0.72rem; background: var(--blue-deep); color: #fbf6ea; border: none; border-radius: 40px; font-weight: 700; cursor: pointer; margin-top: 0.4rem; font-size: 0.84rem; transition: transform .15s var(--ease), box-shadow .15s; }
+        .close-settings-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(63,110,140,.32); }
 
-        .search-section { padding: 1rem 0.9rem; background: var(--paper-warm); border-bottom: 1px solid var(--paper-edge); }
+        .font-size-controls { display:flex; align-items:center; justify-content:center; gap:0.9rem; }
+        .font-size-btn { width:38px; height:38px; border-radius:50%; border:1.5px solid var(--line); background: var(--surface); color:var(--blue-deep); font-weight:800; font-size:0.85rem; cursor:pointer; transition: all .2s var(--ease); }
+        .font-size-btn:hover { border-color:var(--blue); background: var(--blue-tint); }
+        .font-size-label { font-weight:700; color: var(--ink); font-size:0.85rem; min-width:44px; text-align:center; }
+
+        /* ---------- Search ---------- */
+        .search-section { padding: 1.1rem 1rem; background: var(--bg-1); border-bottom: 1px solid var(--line); }
         .search-wrapper { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; justify-content: center; }
-        .search-input { flex: 2; min-width: 200px; padding: 0.65rem 1.05rem; font-size: 0.85rem; border: 2px solid var(--paper-edge); border-radius: 48px; outline: none; transition: all 0.2s; background: #fff; color: var(--ink); }
-        .search-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,161,72,.18); }
-        .search-btn { background: var(--spine); color: var(--gold-light); border: none; padding: 0.65rem 1.25rem; border-radius: 48px; font-weight: 600; cursor: pointer; font-size: 0.8rem; transition: transform .15s var(--ease), box-shadow .15s; }
-        .search-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(19,52,38,.3); }
-        .info-note { text-align: center; margin-top: 0.5rem; font-size: 0.6rem; color: var(--ink-soft); font-style: italic; }
-        .search-suggestions { margin-top: 0.5rem; background: #fff; border-radius: 18px; border: 1px solid var(--paper-edge); display: none; max-height: 180px; overflow-y: auto; box-shadow: 0 10px 24px rgba(0,0,0,.08); }
+        .search-input { flex: 2; min-width: 210px; padding: 0.68rem 1.1rem; font-size: 0.85rem; border: 1.5px solid var(--line); border-radius: 50px; outline: none; transition: all 0.2s; background: var(--surface); color: var(--ink); }
+        .search-input::placeholder { color: var(--ink-soft); }
+        .search-input:focus { border-color: var(--blue); box-shadow: 0 0 0 4px rgba(63,110,140,.14); }
+        .search-btn { background: var(--blue-deep); color: #fbf6ea; border: none; padding: 0.68rem 1.3rem; border-radius: 50px; font-weight: 700; cursor: pointer; font-size: 0.8rem; transition: transform .15s var(--ease), box-shadow .15s; }
+        .search-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(44,79,104,.3); }
+        .info-note { text-align: center; margin-top: 0.55rem; font-size: 0.64rem; color: var(--ink-soft); }
+        .search-suggestions { margin-top: 0.5rem; background: var(--surface); border-radius: var(--radius-md); border: 1px solid var(--line); display: none; max-height: 190px; overflow-y: auto; box-shadow: var(--shadow-sm); }
         .search-suggestions.active { display: block; animation: slideUp .2s var(--ease); }
-        .suggestion-item { padding: 0.5rem 1rem; cursor: pointer; border-bottom: 1px solid #f0e4d4; font-size: 0.8rem; transition: background 0.2s; }
-        .suggestion-item:hover { background: rgba(201,161,72,.14); }
+        .suggestion-item { padding: 0.55rem 1.05rem; cursor: pointer; border-bottom: 1px solid var(--line); font-size: 0.8rem; transition: background 0.15s; color: var(--ink); }
+        .suggestion-item:hover { background: var(--blue-tint); }
         .suggestion-item:last-child { border-bottom: none; }
 
+        /* ---------- Tabs ---------- */
         .main-content { display: flex; flex-wrap: wrap; }
-        .song-section { flex: 1; min-width: 300px; padding: 1.2rem 1.2rem 1.6rem; background: var(--paper); animation: fadeIn .6s var(--ease) .3s both; }
+        .song-section { flex: 1; min-width: 300px; padding: 1.3rem 1.3rem 1.7rem; }
 
-        .tab-bar { display: flex; gap: 0.5rem; margin-bottom: 1.1rem; border-bottom: 2px solid var(--paper-edge); padding-bottom: 0.5rem; flex-wrap: wrap; }
-        .tab-btn { background: none; border: none; padding: 0.4rem 1rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 30px; color: var(--ink-soft); transition: all 0.2s; }
-        .tab-btn.active { background: var(--spine); color: var(--gold-light); box-shadow: 0 4px 10px rgba(19,52,38,.3); }
-        .tab-btn:not(.active):hover { background: rgba(201,161,72,.14); }
+        .tab-bar { display: flex; gap: 0.45rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
+        .tab-btn { background: var(--bg-1); border: 1.5px solid var(--line); padding: 0.42rem 1.05rem; font-size: 0.78rem; font-weight: 700; cursor: pointer; border-radius: 40px; color: var(--ink-soft); transition: all 0.2s; }
+        .tab-btn.active { background: var(--blue-deep); border-color: var(--blue-deep); color: #fbf6ea; }
+        .tab-btn:not(.active):hover { border-color: var(--blue); color: var(--blue-deep); }
+        body.dark-mode .tab-btn:not(.active):hover { color: #e6c07a; }
         .fav-list { display: none; }
         .fav-list.active { display: block; }
         .song-list { display: block; }
 
-        .song-header { position: relative; padding-left: 0.9rem; margin-bottom: 1.1rem; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; }
-        .song-header::before { content:""; position:absolute; left:0; top:2px; bottom:2px; width:4px; background: linear-gradient(180deg, var(--gold), var(--gold-dim)); border-radius: 3px; }
-        .song-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.2rem, 3vw, 1.55rem); font-weight: 600; color: var(--spine); display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; line-height: 1.25; }
-        .fav-star { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--paper-edge); transition: transform .2s var(--ease), color .2s; }
-        .fav-star:hover { transform: scale(1.15); }
-        .fav-star.favourited { color: var(--gold); animation: starPop .4s var(--ease); }
-        @keyframes starPop { 0%{ transform: scale(.6); } 55%{ transform: scale(1.35); } 100%{ transform: scale(1); } }
-        .song-number { background: var(--spine); color: var(--gold-light); padding: 0.25rem 0.75rem; border-radius: 40px; font-size: 0.68rem; font-weight: 700; letter-spacing:.03em; white-space:nowrap; box-shadow: 0 3px 8px rgba(19,52,38,.3); }
+        /* ---------- Song index list ---------- */
+        .song-index-list { display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap:0.65rem; }
+        @media (max-width:520px){ .song-index-list { grid-template-columns: 1fr; } }
+        .index-song-item {
+            display:flex; align-items:center; gap:0.75rem; background: var(--surface);
+            border:1px solid var(--line); border-left: 4px solid var(--accent-c, var(--blue));
+            border-radius: var(--radius-sm); padding:0.62rem 0.9rem; cursor:pointer;
+            transition: transform .16s var(--ease), box-shadow .16s, border-color .16s; min-width:0;
+        }
+        .index-song-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+        .index-song-item:active { transform: translateY(0) scale(0.99); }
+        .index-song-number { color: var(--ink-soft); font-size: 0.68rem; font-weight:800; white-space:nowrap; flex-shrink:0; font-variant-numeric: tabular-nums; }
+        .index-song-title { flex:1; font-weight:600; color: var(--ink); font-size:0.86rem; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+        .index-fav-icon { color: var(--amber); font-size:0.78rem; flex-shrink:0; }
 
-        /* ===== Song action toolbar (random / copy / share / print) ===== */
-        .song-toolbar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+        /* ---------- Song view ---------- */
+        .song-toolbar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.1rem; }
         .action-btn {
             display: inline-flex; align-items: center; gap: 0.45rem;
-            background: #fffdf7; color: var(--spine); border: 1.5px solid var(--paper-edge);
-            padding: 0.45rem 0.9rem; border-radius: 30px; font-size: 0.72rem; font-weight: 700;
-            cursor: pointer; transition: all .2s var(--ease); letter-spacing: .01em;
+            background: var(--surface); color: var(--ink); border: 1.5px solid var(--line);
+            padding: 0.46rem 0.95rem; border-radius: 30px; font-size: 0.72rem; font-weight: 700;
+            cursor: pointer; transition: all .18s var(--ease);
         }
-        .action-btn i { color: var(--gold-dim); font-size: 0.78rem; }
-        .action-btn:hover { border-color: var(--gold); background: rgba(201,161,72,.12); transform: translateY(-1px); box-shadow: 0 6px 14px rgba(19,52,38,.12); }
+        .action-btn i { color: var(--blue); font-size: 0.78rem; }
+        .action-btn:hover { border-color: var(--blue); background: var(--blue-tint); transform: translateY(-1px); }
         .action-btn:active { transform: translateY(0); }
-        .action-btn.random-btn { background: var(--spine); color: var(--gold-light); border-color: var(--spine); }
-        .action-btn.random-btn i { color: var(--gold-light); }
-        .action-btn.random-btn:hover { background: var(--spine-mid); }
+        .action-btn.random-btn { background: var(--blue-deep); color: #fbf6ea; border-color: var(--blue-deep); }
+        .action-btn.random-btn i { color: #f3c880; }
+        .action-btn.random-btn:hover { background: var(--blue); }
         .action-btn.random-btn i.fa-dice { transition: transform .5s var(--ease); }
         .action-btn.random-btn:active i.fa-dice { transform: rotate(220deg); }
-        body.dark-mode .action-btn { background: #1a251f; border-color: #2c3d32; color: #ece3cf; }
-        body.dark-mode .action-btn:hover { background: #26362c; border-color: var(--gold); }
-        body.dark-mode .action-btn.random-btn { background: #133426; color: #e8ce8a; border-color: #133426; }
+
+        .song-header { position: relative; margin-bottom: 1.15rem; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.6rem; }
+        .song-title { font-family: 'Fraunces', serif; font-weight: 560; font-size: clamp(1.3rem, 3.2vw, 1.7rem); color: var(--ink); display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; line-height: 1.25; }
+        .fav-star { background: none; border: none; font-size: 1.15rem; cursor: pointer; color: var(--line); transition: transform .2s var(--ease), color .2s; }
+        .fav-star:hover { transform: scale(1.15); }
+        .fav-star.favourited { color: var(--amber); animation: starPop .4s var(--ease); }
+        @keyframes starPop { 0%{ transform: scale(.6); } 55%{ transform: scale(1.32); } 100%{ transform: scale(1); } }
+        .song-number-badge { position:relative; font-family:'Fraunces',serif; font-weight:650; font-size: 2.6rem; color: var(--accent-c, var(--blue)); opacity:.16; line-height:1; user-select:none; }
 
         .song-lyrics {
-            background: #fffdf7;
-            padding: 1.2rem 1.25rem;
-            border-radius: 18px;
-            border: 1px solid var(--paper-edge);
-            font-size: calc(0.92rem * var(--lyrics-scale, 1)); line-height: 1.85; white-space: pre-wrap; color: #2b2a24;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 1px 2px rgba(0,0,0,.03);
-            animation: turnPage .45s var(--ease);
+            position: relative;
+            background: var(--surface);
+            padding: 1.3rem 1.35rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--line);
+            border-left: 4px solid var(--accent-c, var(--blue));
+            font-size: calc(0.95rem * var(--lyrics-scale, 1)); line-height: 1.9; white-space: pre-wrap; color: var(--ink);
+            box-shadow: var(--shadow-sm);
         }
-        @keyframes turnPage { from { opacity: 0; transform: perspective(800px) rotateY(-6deg) translateX(-8px); } to { opacity: 1; transform: perspective(800px) rotateY(0) translateX(0); } }
-        .lyrics-font-default .song-lyrics { font-family: 'Inter', 'Segoe UI', sans-serif; }
-        .lyrics-font-classic .song-lyrics { font-family: 'Playfair Display', 'Times New Roman', serif; font-size: calc(0.95rem * var(--lyrics-scale, 1)); }
-        .lyrics-font-elegant .song-lyrics { font-family: 'Cormorant Garamond', serif; font-size: calc(1.08rem * var(--lyrics-scale, 1)); }
+        .lyrics-font-default .song-lyrics { font-family: 'Karla', sans-serif; }
+        .lyrics-font-classic .song-lyrics { font-family: 'Fraunces', 'Times New Roman', serif; font-size: calc(0.98rem * var(--lyrics-scale, 1)); }
+        .lyrics-font-elegant .song-lyrics { font-family: 'Cormorant Garamond', serif; font-size: calc(1.1rem * var(--lyrics-scale, 1)); }
         .lyrics-font-traditional .song-lyrics { font-family: 'EB Garamond', serif; font-size: calc(1.02rem * var(--lyrics-scale, 1)); }
         .lyrics-font-book .song-lyrics { font-family: 'Lora', 'Georgia', serif; }
         .lyrics-font-rounded .song-lyrics { font-family: 'Quicksand', sans-serif; }
         .lyrics-font-clean .song-lyrics { font-family: 'Poppins', sans-serif; }
         .lyrics-font-friendly .song-lyrics { font-family: 'Nunito', sans-serif; }
-        .lyrics-font-warm .song-lyrics { font-family: 'Merriweather', serif; font-size: calc(0.85rem * var(--lyrics-scale, 1)); }
-        .lyrics-font-handwritten .song-lyrics { font-family: 'Caveat', cursive; font-size: calc(1.3rem * var(--lyrics-scale, 1)); line-height: 1.6; }
-        .lyrics-font-calligraphy .song-lyrics { font-family: 'Dancing Script', cursive; font-size: calc(1.25rem * var(--lyrics-scale, 1)); line-height: 1.7; }
-        .lyrics-font-typewriter .song-lyrics { font-family: 'Courier Prime', 'Courier New', monospace; font-size: calc(0.8rem * var(--lyrics-scale, 1)); }
+        .lyrics-font-warm .song-lyrics { font-family: 'Merriweather', serif; font-size: calc(0.87rem * var(--lyrics-scale, 1)); }
+        .lyrics-font-handwritten .song-lyrics { font-family: 'Caveat', cursive; font-size: calc(1.32rem * var(--lyrics-scale, 1)); line-height: 1.6; }
+        .lyrics-font-calligraphy .song-lyrics { font-family: 'Dancing Script', cursive; font-size: calc(1.28rem * var(--lyrics-scale, 1)); line-height: 1.7; }
+        .lyrics-font-typewriter .song-lyrics { font-family: 'Courier Prime', 'Courier New', monospace; font-size: calc(0.82rem * var(--lyrics-scale, 1)); }
 
-        .favourite-song-item { background: #fffdf7; border: 1px solid var(--paper-edge); border-radius: 14px; padding: 0.75rem 0.85rem; margin-bottom: 0.7rem; cursor: pointer; transition: transform .18s var(--ease), box-shadow .18s, border-color .18s; }
-        .favourite-song-item:hover { transform: translateX(5px); box-shadow: 0 8px 18px rgba(19,52,38,.12); border-color: var(--gold); }
-        .favourite-song-title { font-weight: 700; color: var(--spine); display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; }
-        .favourite-song-number { background: var(--spine); color: var(--gold-light); padding: 0.2rem 0.55rem; border-radius: 20px; font-size: 0.65rem; }
-        .empty-fav { text-align: center; color: var(--ink-soft); padding: 1.6rem; font-style: italic; font-size: 0.8rem; }
+        /* ---------- Favourites / History lists ---------- */
+        .favourite-song-item, .history-song-item {
+            background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--amber);
+            border-radius: var(--radius-sm); padding: 0.75rem 0.9rem; margin-bottom: 0.65rem; cursor: pointer;
+            transition: transform .16s var(--ease), box-shadow .16s; display:flex; align-items:center; justify-content:space-between; gap:.5rem;
+        }
+        .history-song-item { border-left-color: var(--rose); }
+        .favourite-song-item:hover, .history-song-item:hover { transform: translateX(5px); box-shadow: var(--shadow-sm); }
+        .favourite-song-title, .history-song-title { font-weight: 700; color: var(--ink); display: flex; align-items: center; gap: 0.6rem; font-size: 0.82rem; }
+        .favourite-song-number, .history-song-number { color: var(--ink-soft); font-size: 0.68rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+        .empty-fav { text-align: center; color: var(--ink-soft); padding: 1.8rem; font-style: italic; font-size: 0.82rem; }
 
-        /* ===== All-songs index list (shown on load / via List button) ===== */
-        .song-index-list { display:grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap:0.6rem; animation: fadeIn .5s var(--ease); }
-        @media (max-width:520px){ .song-index-list { grid-template-columns: 1fr; } }
-        .index-song-item { display:flex; align-items:center; gap:0.7rem; background:#fffdf7; border:1px solid var(--paper-edge); border-radius:14px; padding:0.65rem 0.9rem; cursor:pointer; transition: transform .18s var(--ease), box-shadow .18s, border-color .18s; min-width:0; }
-        .index-song-item:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(19,52,38,.14); border-color: var(--gold); }
-        .index-song-item:active { transform: translateY(0) scale(0.99); }
-        .index-song-icon { color: var(--gold-dim); font-size: 0.75rem; flex-shrink:0; }
-        .index-song-number { background: var(--spine); color: var(--gold-light); padding: 0.22rem 0.62rem; border-radius: 20px; font-size: 0.68rem; font-weight:700; white-space:nowrap; flex-shrink:0; }
-        .index-song-title { flex:1; font-weight:600; color: var(--ink); font-size:0.85rem; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-        .index-fav-icon { color: var(--gold); font-size:0.8rem; flex-shrink:0; }
-        body.dark-mode .index-song-item { background:#1a251f; border-color:#2c3d32; }
-        body.dark-mode .index-song-title { color:#ece3cf; }
-        body.dark-mode .index-song-number { background:#133426; color:#e8ce8a; }
-
-        /* ===== Text size control (Settings) ===== */
-        .font-size-controls { display:flex; align-items:center; justify-content:center; gap:0.9rem; }
-        .font-size-btn { width:38px; height:38px; border-radius:50%; border:2px solid var(--paper-edge); background:#fff; color:var(--spine); font-weight:800; font-size:0.85rem; cursor:pointer; transition: all .2s var(--ease); }
-        .font-size-btn:hover { border-color:var(--gold); background: rgba(201,161,72,.14); }
-        .font-size-label { font-weight:700; color: var(--spine); font-size:0.85rem; min-width:44px; text-align:center; }
-        body.dark-mode .font-size-btn { background:#1c2822; border-color:#33453a; color:#e8ce8a; }
-        body.dark-mode .font-size-label { color:#e8ce8a; }
-
-        /* ===== History list (shares favourite-item styling) ===== */
-        .history-song-item { background: #fffdf7; border: 1px solid var(--paper-edge); border-radius: 14px; padding: 0.75rem 0.85rem; margin-bottom: 0.7rem; cursor: pointer; transition: transform .18s var(--ease), box-shadow .18s, border-color .18s; display:flex; align-items:center; justify-content:space-between; gap:.5rem; }
-        .history-song-item:hover { transform: translateX(5px); box-shadow: 0 8px 18px rgba(19,52,38,.12); border-color: var(--gold); }
-        .history-song-title { font-weight: 700; color: var(--spine); display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; }
-        .history-song-number { background: var(--spine); color: var(--gold-light); padding: 0.2rem 0.55rem; border-radius: 20px; font-size: 0.65rem; }
-        .history-clear-wrap { text-align:center; margin-bottom:.8rem; }
-        .clear-history-btn { background:none; border:1.5px dashed var(--paper-edge); color: var(--ink-soft); padding:.35rem .9rem; border-radius:30px; font-size:.68rem; cursor:pointer; transition: all .2s; }
+        .history-clear-wrap { text-align:center; margin-bottom:.9rem; }
+        .clear-history-btn { background:none; border:1.5px dashed var(--line); color: var(--ink-soft); padding:.38rem .95rem; border-radius:30px; font-size:.68rem; cursor:pointer; transition: all .2s; }
         .clear-history-btn:hover { border-color:#b0492f; color:#b0492f; }
-        body.dark-mode .history-song-item { background: #1a251f; border-color: #2c3d32; }
-        body.dark-mode .history-song-title { color: #e8ce8a; }
-        body.dark-mode .history-song-number { background: #133426; color: #e8ce8a; }
-        body.dark-mode .clear-history-btn { border-color: #2c3d32; color: #a99c7d; }
 
-        footer { text-align: center; padding: 0.8rem; background: var(--paper-warm); color: var(--ink-soft); font-size: 0.62rem; border-top: 1px solid var(--paper-edge); letter-spacing:.03em; }
-        footer i { color: var(--gold-dim); margin-right:.3rem; }
+        footer { text-align: center; padding: 0.9rem; background: var(--bg-1); color: var(--ink-soft); font-size: 0.64rem; border-top: 1px solid var(--line); }
+        footer i { color: var(--amber); margin-right:.35rem; }
 
-        .toast-message { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%) translateY(8px); background: var(--spine); color: var(--gold-light); padding: 9px 18px; border-radius: 50px; font-size: 0.72rem; z-index: 2000; opacity: 0; transition: opacity 0.3s, transform .3s; pointer-events: none; box-shadow: 0 10px 24px rgba(0,0,0,.25); }
+        .toast-message { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%) translateY(8px); background: var(--blue-deep); color: #fbf6ea; padding: 9px 20px; border-radius: 50px; font-size: 0.74rem; z-index: 2000; opacity: 0; transition: opacity 0.3s, transform .3s; pointer-events: none; box-shadow: var(--shadow-lg); }
         .toast-message.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-        .install-btn {
-            position: absolute; top: 12px; right: 58px; z-index: 5;
-            background: rgba(232, 206, 138, 0.14); border: 1px solid rgba(232,206,138,.3);
-            color: var(--gold-light); width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
-            font-size: 1rem; transition: all 0.3s var(--ease);
-        }
-        .install-btn:hover { background: rgba(232, 206, 138, 0.28); transform: scale(1.08); }
-        .install-btn:active { transform: scale(0.94); }
-
-        /* ===== Download / Install modal ===== */
+        /* ---------- Download modal ---------- */
         .download-modal-content { max-width: 420px; }
-        .download-modal-content h3 { margin-bottom: .3rem; }
-        .download-intro { text-align:center; font-size:.72rem; color: var(--ink-soft); margin-bottom: 1rem; }
+        .download-intro { text-align:center; font-size:.74rem; color: var(--ink-soft); margin-bottom: 1rem; }
         .platform-tabs { display:flex; gap:.4rem; flex-wrap:wrap; justify-content:center; margin-bottom: 1rem; }
-        .platform-tab { background: none; border: 2px solid var(--paper-edge); color: var(--ink-soft); padding: .35rem .7rem; border-radius: 30px; font-size: .68rem; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:.35rem; transition: all .2s; }
-        .platform-tab.active { background: var(--spine); border-color: var(--spine); color: var(--gold-light); }
-        .platform-tab:not(.active):hover { border-color: var(--gold); }
+        .platform-tab { background: var(--bg-1); border: 1.5px solid var(--line); color: var(--ink-soft); padding: .36rem .75rem; border-radius: 30px; font-size: .68rem; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:.35rem; transition: all .2s; }
+        .platform-tab.active { background: var(--blue-deep); border-color: var(--blue-deep); color: #fbf6ea; }
+        .platform-tab:not(.active):hover { border-color: var(--blue); }
         .platform-panel { display:none; }
         .platform-panel.active { display:block; animation: fadeIn .3s ease; }
         .platform-steps { list-style:none; counter-reset: step; }
-        .platform-steps li { counter-increment: step; position:relative; padding: .5rem 0 .5rem 2rem; font-size: .78rem; line-height:1.5; border-bottom: 1px dashed var(--paper-edge); color: var(--ink); }
+        .platform-steps li { counter-increment: step; position:relative; padding: .55rem 0 .55rem 2.1rem; font-size: .8rem; line-height:1.55; border-bottom: 1px dashed var(--line); color: var(--ink); }
         .platform-steps li:last-child { border-bottom:none; }
-        .platform-steps li::before { content: counter(step); position:absolute; left:0; top: .45rem; width:20px; height:20px; border-radius:50%; background: var(--gold); color: var(--spine); font-size:.65rem; font-weight:800; display:flex; align-items:center; justify-content:center; }
-        .native-install-btn { width:100%; padding:.7rem; background: var(--spine); color: var(--gold-light); border:none; border-radius:40px; font-weight:700; font-size:.8rem; cursor:pointer; margin-top: .9rem; display:none; align-items:center; justify-content:center; gap:.5rem; transition: transform .15s var(--ease); }
+        .platform-steps li::before { content: counter(step); position:absolute; left:0; top: .5rem; width:21px; height:21px; border-radius:50%; background: var(--amber); color: #2b2213; font-size:.66rem; font-weight:800; display:flex; align-items:center; justify-content:center; }
+        .native-install-btn { width:100%; padding:.72rem; background: var(--blue-deep); color: #fbf6ea; border:none; border-radius:40px; font-weight:700; font-size:.82rem; cursor:pointer; margin-top: .9rem; display:none; align-items:center; justify-content:center; gap:.5rem; transition: transform .15s var(--ease); }
         .native-install-btn.visible { display:flex; }
         .native-install-btn:hover { transform: translateY(-1px); }
-        body.dark-mode .platform-tab { border-color: #2c3d32; color: #a99c7d; }
-        body.dark-mode .platform-tab.active { background: #133426; border-color:#133426; color:#e8ce8a; }
-        body.dark-mode .platform-steps li { border-bottom-color: #2c3d32; color:#ece3cf; }
-        body.dark-mode .download-intro { color:#a99c7d; }
 
-        /* ===== Print styles ===== */
+        /* ---------- Print ---------- */
         @media print {
             body { background: #fff !important; padding: 0; }
             .header, .search-section, .tab-bar, .song-toolbar, .settings-btn, .install-btn, .toast-message, footer, .settings-modal, .download-modal, .fav-star { display: none !important; }
-            .app-container { box-shadow: none; border-radius: 0; }
+            .app-container { box-shadow: none; border-radius: 0; border: none; }
             .song-lyrics { border: none; background: #fff; padding: 0; font-size: 14pt; line-height: 1.9; box-shadow: none; }
-            .song-header { padding-left: 0; }
-            .song-header::before { display: none; }
         }
 
         @media (max-width: 750px) {
             body { padding: 0.5rem; }
-            .settings-btn { top: 10px; right: 12px; width: 32px; height: 32px; font-size: 0.9rem; }
-            .install-btn { top: 10px; right: 52px; width: 32px; height: 32px; font-size: 0.9rem; }
-            .song-title { font-size: 1.1rem; }
-            .song-lyrics { font-size: calc(0.85rem * var(--lyrics-scale, 1)); line-height: 1.7; cursor: pointer; }
-            .tab-btn { padding: 0.3rem 0.8rem; font-size: 0.7rem; }
-            .action-btn { padding: 0.4rem 0.75rem; font-size: 0.68rem; }
+            .song-title { font-size: 1.12rem; }
+            .song-lyrics { font-size: calc(0.88rem * var(--lyrics-scale, 1)); line-height: 1.75; cursor: pointer; }
+            .tab-btn { padding: 0.34rem 0.85rem; font-size: 0.7rem; }
+            .action-btn { padding: 0.42rem 0.8rem; font-size: 0.68rem; }
         }
 
-        /* ===== Lyrics focus (mobile zoom) view ===== */
-        .lyrics-focus-view {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: var(--paper);
-            z-index: 3000;
-            overflow: auto;
-            -webkit-overflow-scrolling: touch;
-            touch-action: pinch-zoom pan-x pan-y;
-        }
+        /* ---------- Lyrics focus (mobile zoom) view ---------- */
+        .lyrics-focus-view { display: none; position: fixed; inset: 0; background: var(--bg-1); z-index: 3000; overflow: auto; -webkit-overflow-scrolling: touch; touch-action: pinch-zoom pan-x pan-y; }
         .lyrics-focus-view.active { display: block; }
-        body.dark-mode .lyrics-focus-view { background: #16211b; }
-        .lyrics-focus-header {
-            position: sticky; top: 0; display: flex; align-items: center; gap: 0.7rem;
-            padding: 0.7rem 1rem; background: var(--paper); border-bottom: 1px solid var(--paper-edge); z-index: 2;
-        }
-        body.dark-mode .lyrics-focus-header { background: #16211b; border-bottom-color: #2c3d32; }
-        .lyrics-focus-close {
-            width: 36px; height: 36px; flex-shrink: 0; border-radius: 50%; border: 2px solid var(--paper-edge);
-            background: #fff; color: var(--spine); font-size: 1rem; cursor: pointer;
-        }
-        body.dark-mode .lyrics-focus-close { background: #1c2822; border-color: #33453a; color: #e8ce8a; }
-        .lyrics-focus-title { font-family: 'Playfair Display', serif; font-weight: 600; color: var(--spine); font-size: 0.95rem; }
-        body.dark-mode .lyrics-focus-title { color: #e8ce8a; }
+        .lyrics-focus-header { position: sticky; top: 0; display: flex; align-items: center; gap: 0.7rem; padding: 0.7rem 1rem; background: var(--bg-1); border-bottom: 1px solid var(--line); z-index: 2; }
+        .lyrics-focus-close { width: 36px; height: 36px; flex-shrink: 0; border-radius: 50%; border: 1.5px solid var(--line); background: var(--surface); color: var(--blue-deep); font-size: 1rem; cursor: pointer; }
+        .lyrics-focus-title { font-family: 'Fraunces', serif; font-weight: 560; color: var(--ink); font-size: 0.95rem; }
         .lyrics-focus-hint { margin-inline-start: auto; font-size: 0.65rem; color: var(--ink-soft); white-space: nowrap; }
-        body.dark-mode .lyrics-focus-hint { color: #a99c7d; }
-        .lyrics-focus-content {
-            padding: 1.2rem 1.4rem 3rem; font-size: 1.15rem; line-height: 2;
-            white-space: pre-wrap; color: var(--ink);
-        }
-        body.dark-mode .lyrics-focus-content { color: #ece3cf; }
-        /* Kill the long-press "search / save image" popup on touch devices */
-        .song-lyrics, .lyrics-focus-content, .church-logo, .header-text, .song-title {
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            user-select: none;
-        }
-        /* Only ever used on small/touch screens */
-        @media (min-width: 751px) {
-            .lyrics-focus-view { display: none !important; }
-            .song-lyrics { cursor: default; }
-        }
+        .lyrics-focus-content { padding: 1.2rem 1.4rem 3rem; font-size: 1.15rem; line-height: 2; white-space: pre-wrap; color: var(--ink); }
+        .song-lyrics, .lyrics-focus-content, .church-logo, .header-text, .song-title { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+        @media (min-width: 751px) { .lyrics-focus-view { display: none !important; } .song-lyrics { cursor: default; } }
+
+        /* ---------- Splash ---------- */
+        .splash { position:fixed; inset:0; background: linear-gradient(160deg, var(--blue-deep) 0%, #1d3949 100%); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem; z-index:999999; animation: splashOut .7s ease forwards; animation-delay: 2.2s; }
+        .splash-logo { width:82px; height:82px; object-fit:contain; opacity:0; animation: splashIn 1s var(--ease) forwards; }
+        .splash-ring { position:absolute; width:130px; height:130px; border-radius:50%; border:1px solid rgba(243,200,128,.35); animation: spin 12s linear infinite; }
+        .splash-ring::before { content:""; position:absolute; top:-3px; left:50%; transform:translateX(-50%); width:7px; height:7px; border-radius:50%; background:#f3c880; box-shadow:0 0 14px rgba(243,200,128,.9); }
+        .splash-text { font-family:'Fraunces',serif; color:#fbf6ea; font-size:.8rem; letter-spacing:.08em; opacity:0; animation: splashIn 1s var(--ease) .2s forwards; }
+        @keyframes splashIn { from{opacity:0; transform:scale(.85);} to{opacity:1; transform:scale(1);} }
+        @keyframes splashOut { to { opacity:0; visibility:hidden; } }
+        @keyframes spin { from{ transform:rotate(0deg);} to{ transform:rotate(360deg);} }
+        @media (prefers-reduced-motion: reduce) { .splash { animation: none; display: none; } }
     </style>
 </head>
 <body class="lyrics-font-default">
     <div class="app-container">
         <div class="header">
             <div class="header-top">
- 
                 <img id="churchLogo" class="church-logo" src="https://i.imgur.com/Vj2ZcMH.png" alt="Church Logo">
                 <div class="header-text">
-                    <div class="eyebrow">Est. in worship</div>
-                    <h1>✝ CHRIST THE SAVIOR <span>CHURCH</span> ✝</h1>
-                    <p>Worship Songbook · 59 Songs of Praise</p>
-                    <div class="header-divider"></div>
+                    <div class="kicker">Worship Songbook</div>
+                    <h1>Christ the Savior <em>Church</em></h1>
+                    <p class="tagline">59 songs of praise, close at hand</p>
                 </div>
             </div>
             <button id="installBtn" class="install-btn" title="Download App"><i class="fas fa-download"></i></button>
-            <button id="settingsBtn" class="settings-btn"><i class="fas fa-cog"></i></button>
+            <button id="settingsBtn" class="settings-btn"><i class="fas fa-sliders-h"></i></button>
         </div>
 
         <div class="search-section">
             <div class="search-wrapper">
                 <input type="text" id="searchInput" class="search-input" placeholder="Search by song name or number (1-59)" autocomplete="off">
-                <button id="searchBtn" class="search-btn"><i class="fas fa-search"></i> SEARCH</button>
+                <button id="searchBtn" class="search-btn"><i class="fas fa-search"></i> Search</button>
             </div>
             <div id="searchSuggestions" class="search-suggestions"></div>
-            <div class="info-note">✨ Search by song name or number (1-59) | Click the star to save favourites ✨</div>
+            <div class="info-note">Search by name or number · tap the star to save a favourite</div>
         </div>
 
         <div class="main-content">
             <div class="song-section">
                 <div class="tab-bar">
-                    <button id="tabAllBtn" class="tab-btn active">🎵 All Songs</button>
-                    <button id="tabFavBtn" class="tab-btn">⭐ Favourites</button>
-                    <button id="tabHistoryBtn" class="tab-btn">🕘 History</button>
+                    <button id="tabAllBtn" class="tab-btn active"><i class="fas fa-book-open"></i> All Songs</button>
+                    <button id="tabFavBtn" class="tab-btn"><i class="fas fa-star"></i> Favourites</button>
+                    <button id="tabHistoryBtn" class="tab-btn"><i class="fas fa-clock-rotate-left"></i> History</button>
                 </div>
                 <div id="allSongsList" class="song-list">
                     <div class="empty-fav">Please wait, loading songs...</div>
                 </div>
                 <div id="favSongsList" class="fav-list">
-                    <div class="empty-fav">⭐ No favourites yet. Click the star on any song to add!</div>
+                    <div class="empty-fav">No favourites yet. Tap the star on any song to add one.</div>
                 </div>
                 <div id="historySongsList" class="fav-list">
-                    <div class="empty-fav">🕘 No history yet. Songs you open will show up here.</div>
+                    <div class="empty-fav">No history yet. Songs you open will show up here.</div>
                 </div>
             </div>
         </div>
@@ -438,19 +368,18 @@
         </footer>
     </div>
 
-
     <div id="settingsModal" class="settings-modal">
         <div class="settings-modal-content">
             <h3><i class="fas fa-sliders-h"></i> Settings</h3>
             <div class="setting-item">
-                <label>🌙 Dark Mode</label>
+                <label>Dark mode</label>
                 <div class="toggle-switch">
                     <span>Enable dark theme</span>
                     <div id="darkModeToggle" class="toggle-checkbox"></div>
                 </div>
             </div>
             <div class="setting-item">
-                <label>🔤 Text Size</label>
+                <label>Text size</label>
                 <div class="font-size-controls">
                     <button id="fontSizeDecrease" class="font-size-btn" title="Smaller text">A-</button>
                     <span id="fontSizeLabel" class="font-size-label">100%</span>
@@ -458,7 +387,7 @@
                 </div>
             </div>
             <div class="setting-item">
-                <label>📖 Song Lyrics Font</label>
+                <label>Song lyrics font</label>
                 <select id="fontSelect">
                     <option value="default">Modern (Sans-serif)</option>
                     <option value="classic">Classic (Serif)</option>
@@ -473,7 +402,7 @@
                     <option value="calligraphy">Calligraphy</option>
                     <option value="typewriter">Typewriter</option>
                 </select>
-                <div id="fontPreview" class="font-preview">✝ Amazing grace, how sweet the sound ✝</div>
+                <div id="fontPreview" class="font-preview">Amazing grace, how sweet the sound</div>
             </div>
             <button id="closeSettingsBtn" class="close-settings-btn"><i class="fas fa-check"></i> Close</button>
         </div>
@@ -508,7 +437,6 @@
                     <li>The app icon appears on your Home Screen and opens full‑screen — works offline too.</li>
                 </ol>
             </div>
-
             <div class="platform-panel" data-platform="ios">
                 <ol class="platform-steps">
                     <li>Open this page in <strong>Safari</strong> (must be Safari, not Chrome).</li>
@@ -517,7 +445,6 @@
                     <li>Tap <strong>Add</strong> (top right). The app icon appears on your Home Screen — works offline too.</li>
                 </ol>
             </div>
-
             <div class="platform-panel" data-platform="windows">
                 <ol class="platform-steps">
                     <li>Open this page in <strong>Chrome</strong> or <strong>Edge</strong>.</li>
@@ -526,7 +453,6 @@
                     <li>The app opens in its own window with a Start Menu / taskbar shortcut, just like any program.</li>
                 </ol>
             </div>
-
             <div class="platform-panel" data-platform="mac">
                 <ol class="platform-steps">
                     <li>Open this page in <strong>Chrome</strong>, <strong>Edge</strong>, or <strong>Safari</strong>.</li>
@@ -543,80 +469,63 @@
 
     <div id="toastMessage" class="toast-message"></div>
 
+    <div id="splashScreen" class="splash">
+        <div style="position:relative; display:flex; align-items:center; justify-content:center;">
+            <div class="splash-ring"></div>
+            <img class="splash-logo" src="https://i.imgur.com/Vj2ZcMH.png" alt="">
+        </div>
+        <div class="splash-text">CHRIST THE SAVIOR CHURCH</div>
+    </div>
 
     <script src="songs.js?v=1000"></script>
 
     <script>
-
         let songsDatabase = [];
         let currentSong = null;
         let favourites = [];
         let history = [];
         const MAX_HISTORY = 20;
-
+        const ACCENTS = ['var(--blue)', 'var(--amber)', 'var(--rose)'];
+        function accentFor(num) { return ACCENTS[num % ACCENTS.length]; }
 
         let viewport = document.querySelector('meta[name="viewport"]');
         const VIEWPORT_LOCKED = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover';
         const VIEWPORT_ZOOMABLE = 'width=device-width, initial-scale=1.0, maximum-scale=6.0, user-scalable=yes, viewport-fit=cover';
-        if (viewport) {
-            viewport.setAttribute('content', VIEWPORT_LOCKED);
-        }
-
+        if (viewport) viewport.setAttribute('content', VIEWPORT_LOCKED);
 
         function loadFavourites() {
             const saved = localStorage.getItem('churchFavourites');
-            if (saved) {
-                try {
-                    favourites = JSON.parse(saved);
-                } catch(e) { favourites = []; }
-            }
+            if (saved) { try { favourites = JSON.parse(saved); } catch(e) { favourites = []; } }
             renderFavouritesList();
         }
-
         function saveFavourites() {
             localStorage.setItem('churchFavourites', JSON.stringify(favourites));
             renderFavouritesList();
             updateStarButton();
         }
-
         function toggleFavourite(songNumber) {
             const idx = favourites.indexOf(songNumber);
-            if (idx === -1) {
-                favourites.push(songNumber);
-                showToast('⭐ Added to favourites!');
-            } else {
-                favourites.splice(idx, 1);
-                showToast('♡ Removed from favourites');
-            }
+            if (idx === -1) { favourites.push(songNumber); showToast('Added to favourites'); }
+            else { favourites.splice(idx, 1); showToast('Removed from favourites'); }
             saveFavourites();
         }
-
-        function isFavourite(songNumber) {
-            return favourites.includes(songNumber);
-        }
+        function isFavourite(songNumber) { return favourites.includes(songNumber); }
 
         function updateStarButton() {
             const starBtn = document.querySelector('.fav-star');
             if (starBtn && currentSong) {
-                if (isFavourite(currentSong.number)) {
-                    starBtn.innerHTML = '<i class="fas fa-star"></i>';
-                    starBtn.classList.add('favourited');
-                } else {
-                    starBtn.innerHTML = '<i class="far fa-star"></i>';
-                    starBtn.classList.remove('favourited');
-                }
+                if (isFavourite(currentSong.number)) { starBtn.innerHTML = '<i class="fas fa-star"></i>'; starBtn.classList.add('favourited'); }
+                else { starBtn.innerHTML = '<i class="far fa-star"></i>'; starBtn.classList.remove('favourited'); }
             }
         }
 
         function renderFavouritesList() {
             const container = document.getElementById('favSongsList');
             if (!container || !songsDatabase.length) return;
-
             if (favourites.length === 0) {
-                container.innerHTML = '<div class="empty-fav">⭐ No favourites yet. Click the star on any song to add!</div>';
+                container.innerHTML = '<div class="empty-fav">No favourites yet. Tap the star on any song to add one.</div>';
                 return;
             }
-
             const favSongs = songsDatabase.filter(s => favourites.includes(s.number)).sort((a,b) => a.number - b.number);
             container.innerHTML = favSongs.map(song => `
                 <div class="favourite-song-item" data-num="${song.number}">
@@ -624,29 +533,25 @@
                         <span class="favourite-song-number">#${song.number}</span>
                         <span>${escapeHtml(song.title)}</span>
                     </div>
+                    <i class="fas fa-chevron-right" style="color:var(--ink-soft);font-size:.7rem;"></i>
                 </div>
             `).join('');
-
             document.querySelectorAll('.favourite-song-item').forEach(el => {
                 el.addEventListener('click', () => {
                     selectSong(parseInt(el.dataset.num));
                     document.getElementById('tabAllBtn').click();
-
                     document.getElementById('searchInput').value = '';
                 });
             });
         }
 
-        /* ===== Full songs index (shown on load / via "List" button) ===== */
         function renderSongIndex() {
             const container = document.getElementById('allSongsList');
             if (!container || !songsDatabase.length) return;
-
             container.innerHTML = `
                 <div class="song-index-list">
                     ${songsDatabase.map(song => `
-                        <div class="index-song-item" data-num="${song.number}">
-                            <i class="fas fa-music index-song-icon"></i>
+                        <div class="index-song-item" style="--accent-c:${accentFor(song.number)}" data-num="${song.number}">
                             <span class="index-song-number">#${song.number}</span>
                             <span class="index-song-title">${escapeHtml(song.title)}</span>
                             ${isFavourite(song.number) ? '<i class="fas fa-star index-fav-icon"></i>' : ''}
@@ -654,25 +559,16 @@
                     `).join('')}
                 </div>
             `;
-
             document.querySelectorAll('.index-song-item').forEach(el => {
-                el.addEventListener('click', () => {
-                    selectSong(parseInt(el.dataset.num));
-                });
+                el.addEventListener('click', () => selectSong(parseInt(el.dataset.num)));
             });
         }
 
-        /* ===== History ===== */
         function loadHistory() {
             const saved = localStorage.getItem('churchHistory');
-            if (saved) {
-                try {
-                    history = JSON.parse(saved);
-                } catch(e) { history = []; }
-            }
+            if (saved) { try { history = JSON.parse(saved); } catch(e) { history = []; } }
             renderHistoryList();
         }
-
         function saveHistoryEntry(songNumber) {
             history = history.filter(n => n !== songNumber);
             history.unshift(songNumber);
@@ -680,27 +576,20 @@
             localStorage.setItem('churchHistory', JSON.stringify(history));
             renderHistoryList();
         }
-
         function clearHistory() {
             history = [];
             localStorage.removeItem('churchHistory');
             renderHistoryList();
-            showToast('🕘 History cleared');
+            showToast('History cleared');
         }
-
         function renderHistoryList() {
             const container = document.getElementById('historySongsList');
             if (!container || !songsDatabase.length) return;
-
             if (history.length === 0) {
-                container.innerHTML = '<div class="empty-fav">🕘 No history yet. Songs you open will show up here.</div>';
+                container.innerHTML = '<div class="empty-fav">No history yet. Songs you open will show up here.</div>';
                 return;
             }
-
-            const histSongs = history
-                .map(num => songsDatabase.find(s => s.number === num))
-                .filter(Boolean);
-
+            const histSongs = history.map(num => songsDatabase.find(s => s.number === num)).filter(Boolean);
             container.innerHTML = `
                 <div class="history-clear-wrap">
                     <button id="clearHistoryBtn" class="clear-history-btn"><i class="fas fa-trash"></i> Clear history</button>
@@ -711,11 +600,10 @@
                             <span class="history-song-number">#${song.number}</span>
                             <span>${escapeHtml(song.title)}</span>
                         </div>
-                        <i class="fas fa-chevron-left" style="color:var(--ink-soft);font-size:.7rem;"></i>
+                        <i class="fas fa-chevron-right" style="color:var(--ink-soft);font-size:.7rem;"></i>
                     </div>
                 `).join('')}
             `;
-
             document.querySelectorAll('.history-song-item').forEach(el => {
                 el.addEventListener('click', () => {
                     selectSong(parseInt(el.dataset.num));
@@ -723,7 +611,6 @@
                     document.getElementById('searchInput').value = '';
                 });
             });
-
             const clearBtn = document.getElementById('clearHistoryBtn');
             if (clearBtn) clearBtn.addEventListener('click', clearHistory);
         }
@@ -740,6 +627,7 @@
 
         function displaySong(song) {
             const lyricsHtml = song.lyrics.replace(/\n/g, '<br>');
+            const accent = accentFor(song.number);
             document.getElementById('allSongsList').innerHTML = `
                 <div class="song-toolbar">
                     <button id="backToListBtn" class="action-btn"><i class="fas fa-list"></i> List</button>
@@ -748,32 +636,23 @@
                     <button id="shareBtn" class="action-btn"><i class="fas fa-share-alt"></i> Share</button>
                     <button id="printBtn" class="action-btn"><i class="fas fa-print"></i> Print</button>
                 </div>
-                <div class="song-header">
+                <div class="song-header" style="--accent-c:${accent}">
                     <h2 class="song-title">
                         <span>${escapeHtml(song.title)}</span>
                         <button class="fav-star"><i class="${isFavourite(song.number) ? 'fas fa-star' : 'far fa-star'}"></i></button>
                     </h2>
-                    <span class="song-number">#${song.number}</span>
+                    <span class="song-number-badge" style="--accent-c:${accent}">${song.number}</span>
                 </div>
-                <div class="song-lyrics">${lyricsHtml}</div>
+                <div class="song-lyrics" style="--accent-c:${accent}">${lyricsHtml}</div>
             `;
             const starBtn = document.querySelector('.fav-star');
-            if (starBtn) {
-                starBtn.addEventListener('click', () => toggleFavourite(song.number));
-            }
+            if (starBtn) starBtn.addEventListener('click', () => toggleFavourite(song.number));
             const lyricsEl = document.querySelector('.song-lyrics');
-            if (lyricsEl) {
-                lyricsEl.addEventListener('click', () => {
-                    if (isMobileView()) openLyricsFocus(song);
-                });
-            }
+            if (lyricsEl) lyricsEl.addEventListener('click', () => { if (isMobileView()) openLyricsFocus(song); });
             initToolbar();
         }
 
-        /* ===== Lyrics focus view (mobile-only, tap lyrics to open + pinch to zoom) ===== */
-        function isMobileView() {
-            return window.matchMedia('(max-width: 750px)').matches;
-        }
+        function isMobileView() { return window.matchMedia('(max-width: 750px)').matches; }
 
         function openLyricsFocus(song) {
             if (!song) return;
@@ -788,32 +667,23 @@
             document.body.style.overflow = 'hidden';
             if (viewport) viewport.setAttribute('content', VIEWPORT_ZOOMABLE);
         }
-
         function closeLyricsFocus() {
             const view = document.getElementById('lyricsFocusView');
             if (view) view.classList.remove('active');
             document.body.style.overflow = '';
             if (viewport) viewport.setAttribute('content', VIEWPORT_LOCKED);
         }
-
         function initLyricsFocus() {
             const closeBtn = document.getElementById('closeLyricsFocusBtn');
             if (closeBtn) closeBtn.addEventListener('click', closeLyricsFocus);
-            window.addEventListener('resize', () => {
-                if (!isMobileView()) closeLyricsFocus();
-            });
+            window.addEventListener('resize', () => { if (!isMobileView()) closeLyricsFocus(); });
         }
         initLyricsFocus();
 
-        // Suppress the long-press context menu (e.g. "Search with Google") on text/images
         document.addEventListener('contextmenu', (e) => {
-            if (e.target.closest('.song-lyrics, .lyrics-focus-content, .church-logo')) {
-                e.preventDefault();
-            }
+            if (e.target.closest('.song-lyrics, .lyrics-focus-content, .church-logo')) e.preventDefault();
         });
-        document.querySelectorAll('.church-logo').forEach(img => {
-            img.setAttribute('draggable', 'false');
-        });
+        document.querySelectorAll('.church-logo').forEach(img => img.setAttribute('draggable', 'false'));
 
         function escapeHtml(str) {
             if (!str) return '';
@@ -829,56 +699,37 @@
             setTimeout(() => toast.classList.remove('show'), 2500);
         }
 
-        /* ===== Random / Copy / Share / Print toolbar ===== */
         function pickRandomSong() {
             if (!songsDatabase.length) return;
             let candidates = songsDatabase;
-            if (songsDatabase.length > 1 && currentSong) {
-                candidates = songsDatabase.filter(s => s.number !== currentSong.number);
-            }
+            if (songsDatabase.length > 1 && currentSong) candidates = songsDatabase.filter(s => s.number !== currentSong.number);
             const song = candidates[Math.floor(Math.random() * candidates.length)];
             selectSong(song.number);
-            showToast(`🎲 ${song.title}`);
+            showToast(song.title);
         }
 
         async function copyCurrentSong() {
             if (!currentSong) return;
             const text = `${currentSong.title} (#${currentSong.number})\n\n${currentSong.lyrics}`;
-            try {
-                await navigator.clipboard.writeText(text);
-                showToast('📋 Lyrics copied!');
-            } catch (e) {
+            try { await navigator.clipboard.writeText(text); showToast('Lyrics copied'); }
+            catch (e) {
                 const ta = document.createElement('textarea');
-                ta.value = text;
-                ta.style.position = 'fixed';
-                ta.style.opacity = '0';
-                document.body.appendChild(ta);
-                ta.select();
-                try { document.execCommand('copy'); showToast('📋 Lyrics copied!'); }
-                catch (e2) { showToast('⚠️ Could not copy'); }
+                ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+                document.body.appendChild(ta); ta.select();
+                try { document.execCommand('copy'); showToast('Lyrics copied'); }
+                catch (e2) { showToast('Could not copy'); }
                 document.body.removeChild(ta);
             }
         }
 
         async function shareCurrentSong() {
             if (!currentSong) return;
-            const text = `${currentSong.title} (#${currentSong.number})\n\n${currentSong.lyrics}\n\n✝ Christ the Savior Church`;
-            if (navigator.share) {
-                try {
-                    await navigator.share({ title: currentSong.title, text: text });
-                } catch (e) {
-                    /* user cancelled share — no action needed */
-                }
-            } else {
-                copyCurrentSong();
-                showToast('📋 Sharing not supported — lyrics copied instead');
-            }
+            const text = `${currentSong.title} (#${currentSong.number})\n\n${currentSong.lyrics}\n\nChrist the Savior Church`;
+            if (navigator.share) { try { await navigator.share({ title: currentSong.title, text: text }); } catch (e) {} }
+            else { copyCurrentSong(); showToast('Sharing not supported — lyrics copied instead'); }
         }
 
-        function printCurrentSong() {
-            if (!currentSong) return;
-            window.print();
-        }
+        function printCurrentSong() { if (currentSong) window.print(); }
 
         function initToolbar() {
             const backToListBtn = document.getElementById('backToListBtn');
@@ -893,20 +744,11 @@
             if (printBtn) printBtn.addEventListener('click', printCurrentSong);
         }
 
-
         const LYRIC_FONTS = {
-            default: "'Inter', sans-serif",
-            classic: "'Playfair Display', serif",
-            elegant: "'Cormorant Garamond', serif",
-            traditional: "'EB Garamond', serif",
-            book: "'Lora', serif",
-            rounded: "'Quicksand', sans-serif",
-            clean: "'Poppins', sans-serif",
-            friendly: "'Nunito', sans-serif",
-            warm: "'Merriweather', serif",
-            handwritten: "'Caveat', cursive",
-            calligraphy: "'Dancing Script', cursive",
-            typewriter: "'Courier Prime', monospace"
+            default: "'Karla', sans-serif", classic: "'Fraunces', serif", elegant: "'Cormorant Garamond', serif",
+            traditional: "'EB Garamond', serif", book: "'Lora', serif", rounded: "'Quicksand', sans-serif",
+            clean: "'Poppins', sans-serif", friendly: "'Nunito', sans-serif", warm: "'Merriweather', serif",
+            handwritten: "'Caveat', cursive", calligraphy: "'Dancing Script', cursive", typewriter: "'Courier Prime', monospace"
         };
 
         function applyFont(font) {
@@ -915,24 +757,15 @@
             document.body.classList.add('lyrics-font-' + font);
             localStorage.setItem('lyricsFont', font);
             const preview = document.getElementById('fontPreview');
-            if (preview) {
-                preview.style.fontFamily = LYRIC_FONTS[font];
-            }
+            if (preview) preview.style.fontFamily = LYRIC_FONTS[font];
         }
 
         function applyDarkMode(enabled) {
-            if (enabled) {
-                document.body.classList.add('dark-mode');
-            } else {
-                document.body.classList.remove('dark-mode');
-            }
+            document.body.classList.toggle('dark-mode', enabled);
             localStorage.setItem('churchTheme', enabled ? 'dark' : 'light');
             const toggle = document.getElementById('darkModeToggle');
-            if (toggle) {
-                enabled ? toggle.classList.add('active') : toggle.classList.remove('active');
-            }
+            if (toggle) toggle.classList.toggle('active', enabled);
         }
-
 
         function initSettings() {
             const savedFont = localStorage.getItem('lyricsFont') || 'default';
@@ -963,29 +796,15 @@
             applyDarkMode(savedDarkMode);
 
             const darkModeToggle = document.getElementById('darkModeToggle');
-            if (darkModeToggle) {
-                darkModeToggle.addEventListener('click', () => {
-                    applyDarkMode(!document.body.classList.contains('dark-mode'));
-                });
-            }
+            if (darkModeToggle) darkModeToggle.addEventListener('click', () => applyDarkMode(!document.body.classList.contains('dark-mode')));
 
             const settingsBtn = document.getElementById('settingsBtn');
             const settingsModal = document.getElementById('settingsModal');
             const closeSettingsBtn = document.getElementById('closeSettingsBtn');
-
-            if (settingsBtn) {
-                settingsBtn.addEventListener('click', () => settingsModal.classList.add('active'));
-            }
-            if (closeSettingsBtn) {
-                closeSettingsBtn.addEventListener('click', () => settingsModal.classList.remove('active'));
-            }
-            if (settingsModal) {
-                settingsModal.addEventListener('click', (e) => {
-                    if (e.target === settingsModal) settingsModal.classList.remove('active');
-                });
-            }
+            if (settingsBtn) settingsBtn.addEventListener('click', () => settingsModal.classList.add('active'));
+            if (closeSettingsBtn) closeSettingsBtn.addEventListener('click', () => settingsModal.classList.remove('active'));
+            if (settingsModal) settingsModal.addEventListener('click', (e) => { if (e.target === settingsModal) settingsModal.classList.remove('active'); });
         }
-
 
         function initTabs() {
             const tabAllBtn = document.getElementById('tabAllBtn');
@@ -995,188 +814,103 @@
             const favSongsDiv = document.getElementById('favSongsList');
             const historySongsDiv = document.getElementById('historySongsList');
 
-            function activate(btn) {
-                [tabAllBtn, tabFavBtn, tabHistoryBtn].forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-            }
+            function activate(btn) { [tabAllBtn, tabFavBtn, tabHistoryBtn].forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
 
-            if (tabAllBtn) {
-                tabAllBtn.addEventListener('click', () => {
-                    activate(tabAllBtn);
-                    allSongsDiv.style.display = 'block';
-                    favSongsDiv.style.display = 'none';
-                    historySongsDiv.style.display = 'none';
-
-                    document.getElementById('searchInput').value = '';
-                    renderSongIndex();
-                });
-            }
-            if (tabFavBtn) {
-                tabFavBtn.addEventListener('click', () => {
-                    activate(tabFavBtn);
-                    allSongsDiv.style.display = 'none';
-                    favSongsDiv.style.display = 'block';
-                    historySongsDiv.style.display = 'none';
-                    renderFavouritesList();
-                });
-            }
-            if (tabHistoryBtn) {
-                tabHistoryBtn.addEventListener('click', () => {
-                    activate(tabHistoryBtn);
-                    allSongsDiv.style.display = 'none';
-                    favSongsDiv.style.display = 'none';
-                    historySongsDiv.style.display = 'block';
-                    renderHistoryList();
-                });
-            }
+            if (tabAllBtn) tabAllBtn.addEventListener('click', () => {
+                activate(tabAllBtn);
+                allSongsDiv.style.display = 'block'; favSongsDiv.style.display = 'none'; historySongsDiv.style.display = 'none';
+                document.getElementById('searchInput').value = '';
+                renderSongIndex();
+            });
+            if (tabFavBtn) tabFavBtn.addEventListener('click', () => {
+                activate(tabFavBtn);
+                allSongsDiv.style.display = 'none'; favSongsDiv.style.display = 'block'; historySongsDiv.style.display = 'none';
+                renderFavouritesList();
+            });
+            if (tabHistoryBtn) tabHistoryBtn.addEventListener('click', () => {
+                activate(tabHistoryBtn);
+                allSongsDiv.style.display = 'none'; favSongsDiv.style.display = 'none'; historySongsDiv.style.display = 'block';
+                renderHistoryList();
+            });
         }
-
 
         function initSearch() {
             const searchInput = document.getElementById('searchInput');
             const searchBtn = document.getElementById('searchBtn');
             const suggestionsDiv = document.getElementById('searchSuggestions');
-
-
             searchInput.value = '';
 
             function showSuggestions() {
                 if (!songsDatabase.length) return;
                 const query = searchInput.value.trim().toLowerCase();
-                if (!query) {
-                    suggestionsDiv.classList.remove('active');
-                    return;
-                }
+                if (!query) { suggestionsDiv.classList.remove('active'); return; }
 
                 const numQuery = parseInt(query);
                 if (!isNaN(numQuery) && numQuery >= 1 && numQuery <= songsDatabase.length) {
                     const found = songsDatabase.find(s => s.number === numQuery);
                     if (found) {
-                        suggestionsDiv.innerHTML = `<div class="suggestion-item" data-num="${found.number}">🔢 #${found.number} - ${escapeHtml(found.title)}</div>`;
+                        suggestionsDiv.innerHTML = `<div class="suggestion-item" data-num="${found.number}">#${found.number} — ${escapeHtml(found.title)}</div>`;
                         suggestionsDiv.classList.add('active');
                         return;
                     }
                 }
-
-                const matches = songsDatabase.filter(s =>
-                    s.title.toLowerCase().includes(query) ||
-                    s.lyrics.toLowerCase().includes(query)
-                ).slice(0, 7);
-
+                const matches = songsDatabase.filter(s => s.title.toLowerCase().includes(query) || s.lyrics.toLowerCase().includes(query)).slice(0, 7);
                 if (matches.length) {
-                    suggestionsDiv.innerHTML = matches.map(s =>
-                        `<div class="suggestion-item" data-num="${s.number}">🎵 ${escapeHtml(s.title)} <span style="color:var(--ink-soft);">#${s.number}</span></div>`
-                    ).join('');
+                    suggestionsDiv.innerHTML = matches.map(s => `<div class="suggestion-item" data-num="${s.number}">${escapeHtml(s.title)} <span style="color:var(--ink-soft);">#${s.number}</span></div>`).join('');
                     suggestionsDiv.classList.add('active');
-                } else {
-                    suggestionsDiv.classList.remove('active');
-                }
+                } else suggestionsDiv.classList.remove('active');
             }
 
             let lastSearch = '';
             function searchSong() {
-                if (!songsDatabase.length) {
-                    showToast('Loading songs, please wait...');
-                    return;
-                }
+                if (!songsDatabase.length) { showToast('Loading songs, please wait...'); return; }
                 const query = searchInput.value.trim().toLowerCase();
                 if (!query) return;
-
-
                 if (query === lastSearch) return;
                 lastSearch = query;
 
                 const numQuery = parseInt(query);
                 if (!isNaN(numQuery) && numQuery >= 1 && numQuery <= songsDatabase.length) {
                     const found = songsDatabase.find(s => s.number === numQuery);
-                    if (found) {
-                        selectSong(found.number);
-                        suggestionsDiv.classList.remove('active');
-                        showToast(`🎵 Found: ${found.title}`);
-                        return;
-                    }
+                    if (found) { selectSong(found.number); suggestionsDiv.classList.remove('active'); showToast(`Found: ${found.title}`); return; }
                 }
-
-                const found = songsDatabase.find(s =>
-                    s.title.toLowerCase().includes(query) ||
-                    s.lyrics.toLowerCase().includes(query)
-                );
-                if (found) {
-                    selectSong(found.number);
-                    suggestionsDiv.classList.remove('active');
-                    showToast(`🎵 Found: ${found.title}`);
-                } else {
-                    showToast('No song found. Try a number (1-59) or word.');
-                }
+                const found = songsDatabase.find(s => s.title.toLowerCase().includes(query) || s.lyrics.toLowerCase().includes(query));
+                if (found) { selectSong(found.number); suggestionsDiv.classList.remove('active'); showToast(`Found: ${found.title}`); }
+                else showToast('No song found. Try a number (1-59) or word.');
             }
 
             searchInput.addEventListener('input', showSuggestions);
-            searchInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    searchSong();
-                }
-            });
+            searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') { e.preventDefault(); searchSong(); } });
             searchBtn.addEventListener('click', searchSong);
-
-
             suggestionsDiv.addEventListener('click', (e) => {
                 const item = e.target.closest('.suggestion-item');
-                if (item && item.dataset.num) {
-                    selectSong(parseInt(item.dataset.num));
-                    suggestionsDiv.classList.remove('active');
-                    searchInput.value = '';
-                    lastSearch = '';
-                }
+                if (item && item.dataset.num) { selectSong(parseInt(item.dataset.num)); suggestionsDiv.classList.remove('active'); searchInput.value = ''; lastSearch = ''; }
             });
-
-
-            document.addEventListener('click', (e) => {
-                if (!searchInput.contains(e.target) && !suggestionsDiv.contains(e.target)) {
-                    suggestionsDiv.classList.remove('active');
-                }
-            });
+            document.addEventListener('click', (e) => { if (!searchInput.contains(e.target) && !suggestionsDiv.contains(e.target)) suggestionsDiv.classList.remove('active'); });
         }
-
 
         function initApp() {
             if (window.songsDB && window.songsDB.length > 0) {
                 songsDatabase = window.songsDB;
-                songsDatabase.sort((a,b) => a.number - b.number);
-                loadFavourites();
-                loadHistory();
-                renderSongIndex();
-                initTabs();
-                initSearch();
-                console.log('✅ Loaded', songsDatabase.length, 'songs successfully');
             } else if (typeof songsDB !== 'undefined' && songsDB.length > 0) {
                 songsDatabase = songsDB;
-                songsDatabase.sort((a,b) => a.number - b.number);
-                loadFavourites();
-                loadHistory();
-                renderSongIndex();
-                initTabs();
-                initSearch();
-                console.log('✅ Loaded', songsDatabase.length, 'songs successfully');
-            } else {
-                setTimeout(initApp, 100);
-            }
+            } else { setTimeout(initApp, 100); return; }
+            songsDatabase.sort((a,b) => a.number - b.number);
+            loadFavourites(); loadHistory(); renderSongIndex(); initTabs(); initSearch();
+            console.log('Loaded', songsDatabase.length, 'songs successfully');
         }
-
 
         initSettings();
         initApp();
 
-        // ===== PWA: register service worker for offline support =====
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('service-worker.js')
-                    .then(reg => console.log('✅ Service worker registered', reg.scope))
+                    .then(reg => console.log('Service worker registered', reg.scope))
                     .catch(err => console.warn('Service worker registration failed', err));
             });
         }
 
-        // ===== PWA: capture the native install prompt when the browser offers it =====
         let deferredInstallPrompt = null;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
@@ -1184,14 +918,12 @@
             const nativeBtn = document.getElementById('nativeInstallBtn');
             if (nativeBtn) nativeBtn.classList.add('visible');
         });
-
         window.addEventListener('appinstalled', () => {
             const nativeBtn = document.getElementById('nativeInstallBtn');
             if (nativeBtn) nativeBtn.classList.remove('visible');
-            showToast('✅ App installed!');
+            showToast('App installed');
         });
 
-        // ===== Detect the visitor's platform, to auto-select the right tab =====
         function detectPlatform() {
             const ua = navigator.userAgent || '';
             const platform = navigator.platform || '';
@@ -1202,7 +934,6 @@
             return 'android';
         }
 
-        // ===== Download modal: open/close + platform tabs =====
         function initDownloadModal() {
             const installBtn = document.getElementById('installBtn');
             const downloadModal = document.getElementById('downloadModal');
@@ -1215,127 +946,20 @@
                 tabs.forEach(t => t.classList.toggle('active', t.dataset.platform === platform));
                 panels.forEach(p => p.classList.toggle('active', p.dataset.platform === platform));
             }
-
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => selectPlatform(tab.dataset.platform));
+            tabs.forEach(tab => tab.addEventListener('click', () => selectPlatform(tab.dataset.platform)));
+            if (installBtn) installBtn.addEventListener('click', () => { selectPlatform(detectPlatform()); downloadModal.classList.add('active'); });
+            if (closeDownloadBtn) closeDownloadBtn.addEventListener('click', () => downloadModal.classList.remove('active'));
+            if (downloadModal) downloadModal.addEventListener('click', (e) => { if (e.target === downloadModal) downloadModal.classList.remove('active'); });
+            if (nativeBtn) nativeBtn.addEventListener('click', async () => {
+                if (!deferredInstallPrompt) { showToast('Follow the steps above for your device'); return; }
+                deferredInstallPrompt.prompt();
+                const { outcome } = await deferredInstallPrompt.userChoice;
+                if (outcome === 'accepted') { showToast('App installed'); downloadModal.classList.remove('active'); }
+                deferredInstallPrompt = null;
+                nativeBtn.classList.remove('visible');
             });
-
-            if (installBtn) {
-                installBtn.addEventListener('click', () => {
-                    selectPlatform(detectPlatform());
-                    downloadModal.classList.add('active');
-                });
-            }
-            if (closeDownloadBtn) {
-                closeDownloadBtn.addEventListener('click', () => downloadModal.classList.remove('active'));
-            }
-            if (downloadModal) {
-                downloadModal.addEventListener('click', (e) => {
-                    if (e.target === downloadModal) downloadModal.classList.remove('active');
-                });
-            }
-            if (nativeBtn) {
-                nativeBtn.addEventListener('click', async () => {
-                    if (!deferredInstallPrompt) {
-                        showToast('📱 Follow the steps above for your device');
-                        return;
-                    }
-                    deferredInstallPrompt.prompt();
-                    const { outcome } = await deferredInstallPrompt.userChoice;
-                    if (outcome === 'accepted') {
-                        showToast('✅ App installed!');
-                        downloadModal.classList.remove('active');
-                    }
-                    deferredInstallPrompt = null;
-                    nativeBtn.classList.remove('visible');
-                });
-            }
         }
         initDownloadModal();
     </script>
-
-
-    <div class="gpt-loader">
-        <div class="glow"></div>
-        <div class="circle"></div>
-        <img src="https://i.imgur.com/5ZxgbZG.png" class="logo">
-    </div>
-
-    <style>
-        .gpt-loader{
-            position:fixed;
-            inset:0;
-            background:#f7f4ef;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            overflow:hidden;
-            z-index:999999;
-            animation:fadeOut 1s ease forwards;
-            animation-delay:3.8s;
-        }
-        body.dark-mode .gpt-loader { background: #0a120d; }
-        .logo{
-            width:220px;
-            position:relative;
-            z-index:5;
-            opacity:0;
-            animation:
-            intro 1.8s cubic-bezier(.22,.9,.24,1) forwards,
-            idle 4s ease-in-out infinite 2s;
-            filter:drop-shadow(0 0 18px rgba(0,0,0,0.08));
-        }
-        .glow{
-            position:absolute;
-            width:260px;
-            height:260px;
-            border-radius:50%;
-            background:radial-gradient(circle, rgba(201,161,72,0.22), rgba(201,161,72,0.06), transparent 72%);
-            filter:blur(26px);
-            animation:pulse 4s ease-in-out infinite;
-        }
-        .circle{
-            position:absolute;
-            width:245px;
-            height:245px;
-            border-radius:50%;
-            border:1px solid rgba(201,161,72,0.16);
-            animation:spin 18s linear infinite;
-        }
-        .circle::before{
-            content:"";
-            position:absolute;
-            top:-4px;
-            left:50%;
-            transform:translateX(-50%);
-            width:8px;
-            height:8px;
-            border-radius:50%;
-            background:#c9a148;
-            box-shadow:0 0 15px rgba(201,161,72,0.9), 0 0 30px rgba(201,161,72,0.5);
-        }
-        @keyframes intro{
-            0%{ opacity:0; transform: scale(0.72) rotate(-8deg); filter: blur(8px) drop-shadow(0 0 0 rgba(0,0,0,0)); }
-            45%{ opacity:1; transform: scale(1.04) rotate(1deg); filter: blur(0px) drop-shadow(0 0 25px rgba(201,161,72,0.18)); }
-            100%{ opacity:1; transform: scale(1) rotate(0deg); filter: blur(0px) drop-shadow(0 0 18px rgba(0,0,0,0.08)); }
-        }
-        @keyframes idle{
-            0%{ transform:translateY(0px); }
-            50%{ transform:translateY(-7px); }
-            100%{ transform:translateY(0px); }
-        }
-        @keyframes pulse{
-            0%{ transform:scale(1); opacity:0.55; }
-            50%{ transform:scale(1.08); opacity:1; }
-            100%{ transform:scale(1); opacity:0.55; }
-        }
-        @keyframes spin{
-            from{ transform:rotate(0deg); }
-            to{ transform:rotate(360deg); }
-        }
-        @keyframes fadeOut{
-            to{ opacity:0; visibility:hidden; }
-        }
-    </style>
 </body>
 </html>
